@@ -70,7 +70,7 @@ module Jekyll
       if self.layouts.key? 'category_index'
         dir = self.config['category_dir'] || 'categories'
         self.categories.keys.each do |category|
-          self.write_category_index(File.join(dir, UnicodeUtils.nfkd(category).gsub(/[^\x00-\x7F]/, '').gsub(/_|\W/, '-').to_s), category)
+          self.write_category_index(File.join(dir, category.gsub(/_|\P{Word}/, '-').gsub(/-{2,}/, '-').downcase), category)
         end
 
       # Throw an exception if the layout couldn't be found.
@@ -107,15 +107,7 @@ module Jekyll
     def category_links(categories)
       dir = @context.registers[:site].config['category_dir']
       categories = categories.sort!.map do |item|
-<<<<<<< HEAD
-<<<<<<< HEAD
-        "<a class='category' href='/#{dir}/#{item.gsub(/[_\W]/, '-').gsub(/-{2,}/, '-')}/'>#{item}</a>"
-=======
-        "<a class='category' href='/#{dir}/#{UnicodeUtils.nfkd(item).gsub(/[^\x00-\x7F]/, '').gsub(/_|\W/, '-').to_s}/'>#{item}</a>"
->>>>>>> 80f8a60 (Improved support for non Latin characters in category names. Fixes #128)
-=======
-        "<a class='category' href='/#{dir}/#{item.gsub(/_|\P{Word}/, '-').gsub(/-{2,}/, '-')}/'>#{item}</a>"
->>>>>>> 7e976cb (Improved support for non Latin characters in category names. Fixes #128)
+        "<a class='category' href='/#{dir}/#{item.gsub(/_|\P{Word}/, '-').gsub(/-{2,}/, '-').downcase}/'>#{item}</a>"
       end
 
       case categories.length
