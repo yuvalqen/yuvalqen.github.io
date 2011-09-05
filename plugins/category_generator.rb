@@ -1,3 +1,5 @@
+# encoding: utf-8
+#
 # Jekyll category page generator.
 # http://recursive-design.com/projects/jekyll-plugins/
 #
@@ -16,7 +18,6 @@
 # - category_dir:          The subfolder to build category pages in (default is 'categories').
 # - category_title_prefix: The string used before the category name in the page title (default is
 #                          'Category: ').
-require "unicode_utils"
 
 module Jekyll
 
@@ -107,10 +108,14 @@ module Jekyll
       dir = @context.registers[:site].config['category_dir']
       categories = categories.sort!.map do |item|
 <<<<<<< HEAD
+<<<<<<< HEAD
         "<a class='category' href='/#{dir}/#{item.gsub(/[_\W]/, '-').gsub(/-{2,}/, '-')}/'>#{item}</a>"
 =======
         "<a class='category' href='/#{dir}/#{UnicodeUtils.nfkd(item).gsub(/[^\x00-\x7F]/, '').gsub(/_|\W/, '-').to_s}/'>#{item}</a>"
 >>>>>>> 80f8a60 (Improved support for non Latin characters in category names. Fixes #128)
+=======
+        "<a class='category' href='/#{dir}/#{item.gsub(/_|\P{Word}/, '-').gsub(/-{2,}/, '-')}/'>#{item}</a>"
+>>>>>>> 7e976cb (Improved support for non Latin characters in category names. Fixes #128)
       end
 
       case categories.length
