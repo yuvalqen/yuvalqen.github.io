@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Case Studies | Yuval Qen, a professional Growth Hacker (Under Construction)]]></title>
+  <link href="http://yuvalqen.github.io/blog/categories/case-studies/atom.xml" rel="self"/>
+  <link href="http://yuvalqen.github.io/"/>
+  <updated>2013-11-27T08:50:35+02:00</updated>
+  <id>http://yuvalqen.github.io/</id>
+  <author>
+    <name><![CDATA[Yuval Qen]]></name>
+    <email><![CDATA[hi@yuvalqen.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Case Study 1]]></title>
+    <link href="http://yuvalqen.github.io/blog/2013/10/20/case-study-1/"/>
+    <updated>2013-10-20T08:44:00+03:00</updated>
+    <id>http://yuvalqen.github.io/blog/2013/10/20/case-study-1</id>
+    <content type="html"><![CDATA[<p>This is a story about a site named sue&hellip;</p>
+]]></content>
+  </entry>
+  
+</feed>
