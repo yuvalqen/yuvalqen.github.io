@@ -153,19 +153,7 @@ ERR
     # Returns string
     #
     def category_links(categories)
-      dir = @context.registers[:site].config['category_dir']
-      categories = categories.sort!.map do |item|
-        "<a class='category' href='/#{dir}/#{item.to_url}/'>#{item}</a>"
-      end
-
-      case categories.length
-      when 0
-        ""
-      when 1
-        categories[0].to_s
-      else
-        "#{categories[0...-1].join(', ')}, #{categories[-1]}"
-      end
+      categories.sort.map { |c| category_link c }.join(', ')
     end
 
     # Outputs a single category as an <a> link.
