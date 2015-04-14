@@ -19,7 +19,7 @@ $(window).load(function()
 
     setTimeout(function () {
     	if ($(window).scrollTop() == 0) {
-    		$("#about").animate({"min-height": "50%"}, 1000);
+			$("#services h1").animate({"margin-top": "-=150px", "margin-bottom": "+=150px"}, 200, 'easeOutCubic').animate({"margin-top": "+=150px", "margin-bottom": "-=150px"}, 200, 'easeInCubic');
     	}
     }, 5000);
 });
