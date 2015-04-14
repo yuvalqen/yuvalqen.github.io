@@ -16,4 +16,10 @@ function randomize_position(i, obj) {
 $(window).load(function()
 {
     $.each($(".tool_logo"), randomize_position);
+
+    setTimeout(function () {
+    	if ($(window).scrollTop() == 0) {
+    		$("#about").animate({"min-height": "50%"}, 1000);
+    	}
+    }, 5000);
 });
