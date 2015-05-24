@@ -32,8 +32,6 @@ a,
 }
 
 a {
-    color:#fff;
-    color:rgba(255,255,255,0.8);
     font-weight: bold;
 }
 a:hover {
@@ -782,9 +780,6 @@ h6 {
 /* -------------- GRID ----------------- */
 
 #main-content .grid {
-    display:block;
-    margin:1em 0;
-    padding:0;
     list-style: none;
     font-size:0.9em;
 }
@@ -859,7 +854,7 @@ h6 {
         }
 
         #main-content .grid .text-content {
-            padding-left:35%;
+            padding-left:30%;
         }         
     }
     @media (min-width: 1200px) {
