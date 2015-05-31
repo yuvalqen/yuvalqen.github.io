@@ -112,8 +112,9 @@
        - set each <li> id to this format: &#8220;menu-item-[the id of the .section-wrapper to link to]&#8221;.
        - set href of each <a> to the id of the .section-wrapper to link to <-->
   <ul id="main-menu">
-    <li id="menu-item-about" class="menu-item scroll"><a href="#about">About</a></li>
+    <li id="menu-item-intro-section" class="menu-item scroll"><a href="#intro-section">Intro</a></li>
     <li id="menu-item-services" class="menu-item scroll"><a href="#services">Services</a></li>
+    <li id="menu-item-about" class="menu-item scroll"><a href="#about">About</a></li>
     <li id="menu-item-contact" class="menu-item scroll"><a href="#contact">Contact</a></li>
     <!-- to include a link which doesn't scroll to a section inside the page, remove the .scroll class from the <li> - example below <-->
     <!-- <li id="menu-item-alt-page" class="menu-item"><a href="http://www.link.com">Outer Link</a></li> <-->
@@ -133,7 +134,7 @@ MAIN CONTENT
   <!-- FOR EACH SECTION <article class="section-wrapper".. :
        - remember to use a unique id, 
        - (optional) set a "data-custom-background-img" attribute with a link to custom background image which will be used when the viewer scrolls to this section <-->
-  <article id="about" class="section-wrapper clearfix" data-custom-background-img="images/other_images/bg1.jpg">
+  <article id="intro-section" class="section-wrapper clearfix" data-custom-background-img="images/other_images/bg1.jpg">
     <div class="content-wrapper clearfix">
       <div class="col-xs-12 col-sm-12 col-md-9">
 
@@ -200,19 +201,33 @@ MAIN CONTENT
 </div>
 
             
+            
+            
+            <div class="row grid clearfix">
+	<div class="speech col-md-10 col-xs-11 left fadeInLeft wow" data-wow-delay="1.1s">
+		<div class="speech_bubble_content">
+			
+			Don&#8217;t take my word for it, ask these guys:
+          <center class="trusted_by">
+            <img class="client_logo" src="images/other_images/fxempire_logo.png">
+            <img class="client_logo" src="images/other_images/shoppaul_logo.png">
+            <img class="client_logo" src="images/other_images/craftvapery_logo.png">
+          </center>
+            
+			
+			<div class="speech_bottom_border">
+			</div>
+		</div>
+	</div>
+</div>
+
+            
 
           </section>
       </div>
 
       <div class="hidden-xs hidden-sm col-md-3">
         <img class="portrait" src="images/other_images/portrait.jpg">
-         <center>
-          <p class="trusted_by"><b>Trusted By:</b>
-          <img class="client_logo" src="images/other_images/fxempire_logo.png">
-          <img class="client_logo" src="images/other_images/shoppaul_logo.png">
-          <img class="client_logo" src="images/other_images/craftvapery_logo.png">
-          </p>
-         </center>
       </div>      
 
 <!--       <div class="col-xs-12 col-sm-12 col-md-9">
@@ -284,6 +299,56 @@ MAIN CONTENT
 
           </section><!-- end: grid -->
 
+      </div><!-- .col-sm-10 <-->
+      <div id="tools_section" class="hidden-xs hidden-sm col-md-3">
+        <img class="tool_logo" src="images/other_images/google_analytics_logo.png">
+        <img class="tool_logo" src="images/other_images/google_spreadsheet_logo.png">
+        <img class="tool_logo" src="images/other_images/crazy_egg_logo.png">
+        <img class="tool_logo" src="images/other_images/mixpanel_logo.png">
+        <img class="tool_logo" src="images/other_images/mailchimp_logo.png">
+        <img class="tool_logo" src="images/other_images/optimizely_logo.png">
+        <img class="tool_logo" src="images/other_images/vwo_logo.png">
+      </div>      
+
+    </div><!-- .content-wrapper <-->
+  </article><!-- .section-wrapper <-->
+  <!-- ==================== END: SECTION TYPE: Services ==================== <-->
+
+  <article id="about" class="section-wrapper clearfix" data-custom-background-img="images/other_images/bg2.jpg">
+    <div class="content-wrapper clearfix">
+      <div class="col-xs-12 col-sm-12 col-md-9">
+
+        <!-- Start: Section content to edit <-->
+
+          <center><h1 class="section-title">About</h1></center>
+
+          <section class="grid row clearfix clearfix-for-2cols">
+            <!-- grid item -->
+            <div class="grid-item col-md-10 col-sm-10">
+                  Since early childhood I&#8217;ve been that geek who gets his thrills from devising creative tricks to exploit rule systems, be it computer games, school rules or shortcuts to the neighborhood pizza place.
+            </div><!-- end: .grid-item -->
+          </section>
+
+          <section class="grid row clearfix clearfix-for-2cols">
+            <div class="grid-item col-md-1 col-sm-1 hidden-xs">
+            <i class="fa fa-share upside-down fa-2x"></i>
+            </div>
+            <!-- grid item -->
+            <div class="grid-item col-md-10 col-sm-10">
+              A decade has passed, I&#8217;ve taken on various roles such as software developer, InfoSec expert, entrepreneur, product manager, community manager, BizDev person and even a bar mizvah clown.
+            </div><!-- end: .grid-item -->
+          </section>
+
+          <section class="grid row clearfix clearfix-for-2cols">
+            <div class="grid-item col-md-1 col-sm-1 col-md-offset-1 col-sm-offset-1 hidden-xs">
+              <i class="fa fa-share upside-down fa-2x"></i>
+            </div>
+            <!-- grid item -->
+            <div class="grid-item col-md-10 col-sm-10">
+              Until one day, I figured I can get back to what got me the most ecstatic in the first place and even get paid for it, they just call it Conversion Rate Optimization.
+            </div><!-- end: .grid-item -->
+          </section><!-- end: grid -->
+
           <section class="feature-text">
 
             
@@ -347,18 +412,13 @@ MAIN CONTENT
 
       </div><!-- .col-sm-10 <-->
       <div class="hidden-xs hidden-sm col-md-3">
-        <img class="tool_logo" src="images/other_images/google_analytics_logo.png">
-        <img class="tool_logo" src="images/other_images/google_spreadsheet_logo.png">
-        <img class="tool_logo" src="images/other_images/crazy_egg_logo.png">
-        <img class="tool_logo" src="images/other_images/mixpanel_logo.png">
-        <img class="tool_logo" src="images/other_images/mailchimp_logo.png">
-        <img class="tool_logo" src="images/other_images/optimizely_logo.png">
-        <img class="tool_logo" src="images/other_images/vwo_logo.png">
+        &nbsp;
       </div>      
 
     </div><!-- .content-wrapper <-->
   </article><!-- .section-wrapper <-->
   <!-- ==================== END: SECTION TYPE: Services ==================== <-->
+
 
   <!-- ==================== SECTION TYPE: Contact ==================== <-->
   <!-- This type of section should contain text (contact details) and a contact form <-->
