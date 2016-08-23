@@ -67,14 +67,14 @@
 
 			destination = 'https://www.paypal.com/cgi-bin/webscr/?cmd=_s-xclick';
 			destination = destination + '&amp;hosted_button_id=' + {
-					'1': 'Y9PEP7HUD7788',
-					'2': 'SDR7Z56BE762E',
-					'3': 'DT7B9YJ25ZYDC',
+					'10-days-trial': 'Y9PEP7HUD7788',
+					'1-month-plan': 'SDR7Z56BE762E',
+					'3-months-plan': 'DT7B9YJ25ZYDC',
 			}[$('form input#plan').val()];
 			destination = destination + '&amp;return=' + {
-					'1': 'http://www.signals.fxempire.com/thankyou-10-days-trial-plan',
-					'2': 'http://www.signals.fxempire.com/thank-you-page-monthly-plan',
-					'3': 'http://www.signals.fxempire.com/thank-you-page-3-month-plan'
+					'10-days-trial': 'http://www.signals.fxempire.com/thankyou-10-days-trial-plan',
+					'1-month-plan': 'http://www.signals.fxempire.com/thank-you-page-monthly-plan',
+					'3-months-plan': 'http://www.signals.fxempire.com/thank-you-page-3-month-plan'
 			}[$('form input#plan').val()];
 			destination = destination + '&amp;first_name=' + $('form input#firstname').val();
 			destination = destination + '&amp;last_name=' + $('form input#lastname').val();
@@ -101,6 +101,10 @@
 				<input type="text" autocomplete="off" tabindex="0" aria-label="Phone" aria-describedby="i.desc.2029484972 i.err.2029484972" id="phone" name="entry.255732022" value="" placeholder="*Phone" required dir="auto" data-initial-dir="auto" data-initial-value="" />
 			</div>
 
+			<input type="hidden" autocomplete="off" tabindex="0" aria-label="Country" aria-describedby="i.desc.1025805198 i.err.1025805198"  name="entry.1828555500" id="country" value="Unknown" required dir="auto" data-initial-dir="auto" data-initial-value="" />
+
+			<input type="hidden" autocomplete="off" tabindex="0" aria-label="City" aria-describedby="i.desc.1422717203 i.err.1422717203"  name="entry.208773208" id="city" value="Unknown" required dir="auto" data-initial-dir="auto" data-initial-value="" />
+
 			<input type="hidden" autocomplete="off" tabindex="0" aria-label="Plan" aria-describedby="i.desc.1329269109 i.err.1329269109"  name="entry.2104555196" id="plan" value="" required dir="auto" data-initial-dir="auto" data-initial-value="" />
 
 			<input type="hidden" name="fvv" value="1">
@@ -124,6 +128,11 @@
 			$(document).ready(function() {
 				$("form input#plan").val(getQueryStringParameter('plan'));
 			});
+
+			$.get("http://ipinfo.io", function(response) {
+    			$("form input#country").val(response.country);
+    			$("form input#city").val(response.city);
+			}, "jsonp");
 		</script>
 	</body>
 </html>
