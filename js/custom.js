@@ -4,7 +4,7 @@ function random_range(min, max) {
 
 function randomize_position(i, obj) {
 
-	$(obj).css('margin-top', random_range(40, 140) + "px");
+	$(obj).css('margin-top', random_range(20, 50) + "px");
 	tilt_degs = "rotate(" + random_range(-40, 41) + "deg)";
 	$(obj).css('transform', tilt_degs);
 	$(obj).css('-webkit-transform', tilt_degs);
