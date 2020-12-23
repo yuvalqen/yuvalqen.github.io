@@ -158,7 +158,7 @@ function cartesian() {
 var config = {
   bills: ["Common Cost", "Electricity", "Gas", "Internet", "Management Fee", "Water", "Insurance"],
   landlords: ["Holistic Solutions"],
-  expenses: ["Maintenance", "Legal Fees", "Tax/", "Tax/Purchase Tax", "Renovation/", "Renovation/Construction Labor", "Renovation/Worker Accomodations", "Renovation/Worker Personal Expenses", "Renovation/Electrician", "Renovation/Plumber", "Renovation/White Materials", "Renovation/Black Materials", "Renovation/Furnitures", "Renovation/Appliances", "Renovation/Accessories", "Renovation/Travel Costs", "Renovation/Assembly Labor", "Renovation/Cleaning Labor", "Renovation/Waste Disposal", "Renovation/Static Engineer", "Renovation/Utility Company Fees", "Purchase Cost", "Grants"],
+  expenses: ["Maintenance", "Legal Fees", "Tax/", "Tax/Purchase Tax", "Renovation/", "Renovation/Construction Labor", "Renovation/Worker Accomodations", "Renovation/Worker Personal Expenses", "Renovation/Electrician", "Renovation/Plumber", "Renovation/White Materials", "Renovation/Black Materials", "Renovation/Furnitures", "Renovation/Appliances", "Renovation/Accessories", "Renovation/Travel Costs", "Renovation/Assembly Labor", "Renovation/Cleaning Labor", "Renovation/Waste Disposal", "Renovation/Static Engineer", "Renovation/Utility Company Fees", "Renovation/Tools", "Administration", "Purchase Cost", "Grants"],
   employees: ["Amit", "Denitsa", "Joseph", "Yuval"],
   assets: ["Sofia 7"],
   tenant: ["Tenant"],
@@ -179,8 +179,6 @@ var payerOptions = [].concat.apply([], [
   cartesian(config["tenant"], '/', ['Deposit'], '/', config['assets']),
   cartesian(config["tenant"], '/', ['Bills', 'Rent'], '/', config['assets'], '/'),
   cartesian(config["tenant"], '/', ['Bills', 'Rent'], '/', config['assets'], '/', ["DD.MM.YYYY-DD.MM.YYYY"]),
-  cartesian(["Renovation/", "Renovation/Balance-Amit", "Renovation/Balance-Yossi", "Renovation/Balance-Safe"], '/'),
-  cartesian(["Renovation/", "Renovation/Balance-Amit", "Renovation/Balance-Yossi", "Renovation/Balance-Safe"], '/', config['assets']),
   config['landlords'],
   config['employees']
 ]);
