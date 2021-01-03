@@ -156,9 +156,9 @@ function cartesian() {
     return r.map(function(e) {return (e.join('').slice(0, -1).indexOf('//') >=0) ? "" : e.join('').replace('//', '/')}).filter(function (e) { return e.length > 0 });
 }
 var config = {
-  bills: ["Common Cost", "Electricity", "Gas", "Internet", "Management Fee", "Water", "Insurance"],
+  bills: ["Common Cost", "Electricity", "Gas", "Internet", "Management Fee", "Water", "Insurance", "Banking Fees"],
   landlords: ["Holistic Solutions"],
-  expenses: ["Maintenance", "Legal Fees", "Tax/", "Tax/Purchase Tax", "Renovation/", "Renovation/Management", "Renovation/Construction Labor", "Renovation/Worker Accomodations", "Renovation/Worker Personal Expenses", "Renovation/Electrician", "Renovation/Plumber", "Renovation/White Materials", "Renovation/Black Materials", "Renovation/Furnitures", "Renovation/Appliances", "Renovation/Accessories", "Renovation/Travel Costs", "Renovation/Assembly Labor", "Renovation/Cleaning Labor", "Renovation/Waste Disposal", "Renovation/Static Engineer", "Renovation/Utility Company Fees", "Renovation/Tools", "Administration", "Purchase Cost", "Grants", "Banking Fees"],
+  expenses: ["Maintenance", "Legal Fees", "Tax/", "Tax/Purchase Tax", "Renovation/", "Renovation/Management", "Renovation/Construction Labor", "Renovation/Worker Accomodations", "Renovation/Worker Personal Expenses", "Renovation/Electrician", "Renovation/Plumber", "Renovation/White Materials", "Renovation/Black Materials", "Renovation/Furnitures", "Renovation/Appliances", "Renovation/Accessories", "Renovation/Travel Costs", "Renovation/Assembly Labor", "Renovation/Cleaning Labor", "Renovation/Waste Disposal", "Renovation/Static Engineer", "Renovation/Utility Company Fees", "Renovation/Tools", "Administration", "Purchase Cost", "Grants"],
   employees: ["Amit", "Denitsa", "Joseph", "Yuval", "Rositsa"],
   assets: ["Sofia 7"],
   tenant: ["Tenant"],
