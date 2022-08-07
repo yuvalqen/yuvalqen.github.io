@@ -46,7 +46,7 @@ form#transaction-form div.date-picker label { display: block; }
 </form>
 <a onclick="eraseCookie('cfg'); document.location = document.location.toString().split('?')[0];">Erase preselection</a>
 <script>
-    
+
 function createCookie(name, value, days) {
     var expires;
     if (days) {
@@ -206,6 +206,7 @@ configureInput(document.querySelector("form#transaction-form input[name^='payer-
 configureInput(document.querySelector("form#transaction-form input[name^='beneficiary-']"), beneficiaryOptions);
 document.querySelector("form#transaction-form").addEventListener('submit', submitForm);
 document.getElementById("dynamic-title").innerHTML = config['title'];
+var x = 2;
 </script>
 </body>
 </html>
