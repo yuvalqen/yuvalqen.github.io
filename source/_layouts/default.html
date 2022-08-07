@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+	{% capture root_url %}{{ site.root | strip_slash }}{% endcapture %}
+	{% assign index = true %}
+	{% include head.html %}
+	<!-- data-default-background-img attr is required for sections (.section-wrapper) below that have no custom background defined, and when background change is disabled for mobile -->
+	<!-- data-overlay: "true" - semi-transparent black overlay on top of bg enabled, "false" - disabled -->
+	<!-- data-overlay-opacity: set the opacity/transparency of the black overlay -->
+	<body data-default-background-img="images/other_images/bg5.jpg" data-overlay="true" data-overlay-opacity="0.6">
+
+	    <!-- Outer Container -->
+	    <div id="outer-container">
+			{{ content | expand_urls: root_url }}
+			{% include footer.html %}
+	    </div><!-- #outer-container -->
+	    <!-- end: Outer Container -->
+		{% include after_footer.html %}
+	</body>
+
+</html>

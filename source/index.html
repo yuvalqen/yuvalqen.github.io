@@ -1,0 +1,263 @@
+---
+layout: default
+---
+
+<!-- Left Sidebar <-->
+<section id="left-sidebar">
+  
+  <!-- ==================================================================
+  LOGO 
+  ==================================================================  <-->
+  <!-- change the img src to your logo <-->
+  <div class="logo">
+    <a href="#intro-section" class="link-scroll"><img src="images/other_images/logo.png" alt="Yuval Qen"></a>
+    <div class="subtitle">{{site.subtitle}}</div>
+    
+  </div><!-- .logo <-->
+  <!-- ==================== END: LOGO ==================== <-->
+
+  <!-- Menu Icon for smaller viewports <-->
+  <div id="mobile-menu-icon" class="visible-xs" onClick="toggle_main_menu();"><span class="glyphicon glyphicon-th"></span></div>
+
+  <!-- ==================================================================
+  MAIN MENU 
+  ==================================================================  <-->
+  <!-- Each menu item links to a section (<article class="section-wrapper...") in the main content below.
+       - set each <li> id to this format: "menu-item-[the id of the .section-wrapper to link to]".
+       - set href of each <a> to the id of the .section-wrapper to link to <-->
+  <ul id="main-menu">
+    <li id="menu-item-intro-section" class="menu-item scroll"><a href="#intro-section">Intro</a></li>
+    <li id="menu-item-services" class="menu-item scroll"><a href="#services">Services</a></li>
+    <li id="menu-item-contact" class="menu-item scroll"><a href="#contact">Contact</a></li>
+    <!-- to include a link which doesn't scroll to a section inside the page, remove the .scroll class from the <li> - example below <-->
+    <!-- <li id="menu-item-alt-page" class="menu-item"><a href="http://www.link.com">Outer Link</a></li> <-->
+  </ul><!-- #main-menu <-->
+  <!-- ==================== END: MAIN MENU ==================== <-->
+
+</section><!-- #left-sidebar <-->
+<!-- end: Left Sidebar <-->
+
+<!-- ==================================================================
+MAIN CONTENT
+==================================================================  <-->
+<section id="main-content" class="clearfix">
+  
+  <!-- ==================== SECTION TYPE: Intro Text ==================== <-->
+  <!-- This type of section should contain heading and intro paragraph. It can also include links to other sections <-->
+  <!-- FOR EACH SECTION <article class="section-wrapper".. :
+       - remember to use a unique id, 
+       - (optional) set a "data-custom-background-img" attribute with a link to custom background image which will be used when the viewer scrolls to this section <-->
+  <article id="intro-section" class="section-wrapper clearfix" data-custom-background-img="images/other_images/bg1.jpg">
+    <div class="content-wrapper clearfix">
+      <div class="col-xs-12 col-sm-12 col-md-9">
+
+          <section class="feature-text">
+            <center><h1>{{ site.title }}</h1></center>
+            {% capture bubble_text %}I'll make your website more profitable.{% endcapture %}
+            {% assign bubble_direction = 'left' %}
+            {% assign bubble_wow_delay = '0.3s' %}
+            {% include custom/speech_bubble.html %}
+
+            {% capture bubble_text %}Is that all?{% endcapture %}
+            {% assign bubble_direction = 'right' %}
+            {% assign bubble_wow_delay = '0.5s' %}
+            {% include custom/speech_bubble.html %}
+
+            {% capture bubble_text %}If you have a money-making website, and you like making a profit, it should hit the spot.{% endcapture %}
+            {% assign bubble_direction = 'left' %}
+            {% assign bubble_wow_delay = '0.7s' %}
+            {% include custom/speech_bubble.html %}
+
+            {% capture bubble_text %}If you put it that way...{% endcapture %}
+            {% assign bubble_direction = 'right' %}
+            {% assign bubble_wow_delay = '0.9s' %}
+            {% include custom/speech_bubble.html %}
+
+            {% capture bubble_text %}Don't take my word for it, ask these guys:
+          <center class="trusted_by">
+            <a href="http://azrieli.com" target="blank"><img class="client_logo" src="images/other_images/azrieli_logo.png"></a>
+            <a href="http://sodastream.com" target="blank"><img class="client_logo" src="images/other_images/sodastream_logo.png"></a>
+            <a href="http://www.imgacademy.com" target="blank"><img class="client_logo" src="images/other_images/imga_logo.png"></a>
+            <a href="http://www.aligntech.com" target="blank"><img class="client_logo" src="images/other_images/align_logo.png"></a>
+            <a href="http://www.fxempire.com" target="blank"><img class="client_logo" src="images/other_images/fxempire_logo.png"></a>
+            <a href="http://maelyscosmetics.com" target="blank"><img class="client_logo" src="images/other_images/maelys_logo.png"></a>
+            <a href="http://www.sohocenter.co.il" target="blank"><img class="client_logo smaller" src="images/other_images/soho_logo.png"></a>
+            <a href="http://www.gras.co.il" target="blank"><img class="client_logo smaller" src="images/other_images/gras_logo.png"></a>
+
+            <a href="http://www.r-bloggers.com" target="blank"><img class="client_logo smaller" src="images/other_images/r_bloggers_logo.png"></a>
+            <a href="http://www.volta.solar" target="blank"><img class="client_logo smaller" src="images/other_images/volta_solar_logo.png"></a>
+            <a href="http://onestep.co" target="blank"><img class="client_logo" src="images/other_images/one_step_logo.png"></a>
+            <a href="http://www.ioiventures.com" target="blank"><img class="client_logo smaller" src="images/other_images/ioi_logo.png"></a>
+            <a href="http://www.timesofisrael.com" target="blank"><img class="client_logo smaller" src="images/other_images/the_times_of_israel_logo.png"></a>
+
+            <a href="http://www.waldophotos.com" target="blank"><img class="client_logo smallest" src="images/other_images/waldo_logo.png"></a>
+            <img class="client_logo smallest" src="images/other_images/shoppaul_logo.png">
+            <a href="http://www.clicksmob.com" target="blank"><img class="client_logo smallest" src="images/other_images/clicksmob_logo.png"></a>
+            <img class="client_logo smallest" src="images/other_images/legacy_global_sports_logo.png">
+            <img class="client_logo smallest" src="images/other_images/leap_logo.png">
+            <a href="http://www.craftvapery.com" target="blank"><img class="client_logo smallest" src="images/other_images/craftvapery_logo.png"></a>
+            <a href="http://www.worldofjudaica.com" target="blank"><img class="client_logo smallest" src="images/other_images/woj_logo.png"></a>
+
+          </center>
+            {% endcapture %}
+            {% assign bubble_direction = 'left' %}
+            {% assign bubble_wow_delay = '1.1s' %}
+            {% include custom/speech_bubble.html %}
+
+            {% assign bubble_wow_delay = '0.3s' %}
+
+          </section>
+      </div>
+
+      <div class="hidden-xs hidden-sm col-md-3">
+        <img class="portrait" src="images/other_images/portrait.jpg">
+      </div>      
+
+    </div>
+  </article>
+  
+  <article id="services" class="section-wrapper clearfix" data-custom-background-img="images/other_images/bg2.jpg">
+    <div class="content-wrapper clearfix">
+      <div class="col-xs-12 col-sm-12 col-md-9">
+
+        <!-- Start: Section content to edit <-->
+
+          <center><h1 class="section-title">Services</h1></center>
+
+          <section class="feature-text">
+
+            {% capture bubble_text %}Over the last two decades the Internet industry has matured from the wild west of innovation to a well established industry with clear best practices. The bar has also increased and to survive, an Internet business must be proficient in 
+            <span style="font-size: 100%">user behavior tracking, </span>
+            <span style="font-size: 94%">funnels and dashboards, </span>
+            <span style="font-size: 88%">data driven UX optimization, </span>
+            <span style="font-size: 82%">paid campaign budget allocation, </span>
+            <span style="font-size: 76%">revenue attribution, </span>
+            <span style="font-size: 70%">retention management, </span>
+            <span style="font-size: 64%">scraping, </span>
+            <span style="font-size: 58%">data driven content marketing, </span>
+            <span style="font-size: 52%">real time marketing automation, </span>
+            <span style="font-size: 46%">product feed management, </span>
+            <span style="font-size: 40%">SEO, </span>
+            <span style="font-size: 34%">profitability analysis, </span>
+            <span style="font-size: 28%">price flexibility</span> <br><bold>*inhales*</bold> and quite a few other skills.
+            {% endcapture %}
+            {% assign bubble_direction = 'left' %}
+            {% include custom/speech_bubble.html %}
+
+            <br>
+
+            {% capture bubble_text %}
+            I accumulated know-how and proven recipes to tackle each and every topic in the list above and I help my clients by creating tailor made processes to suit their specific business focus.
+            {% endcapture %}
+            {% assign bubble_direction = 'left' %}
+            {% include custom/speech_bubble.html %}
+
+          </section><!-- end: grid -->
+
+          <section class="feature-text">
+
+            {% capture bubble_text %}That's nice, but who is this for?{% endcapture %}
+            {% assign bubble_direction = 'right' %}
+            {% include custom/speech_bubble.html %}
+
+            {% capture bubble_text %}Ecommerce &amp; SaaS operators, selling over the Internet with $1M - $100M in yearly revenues, targeting consumers or SMBs.{% endcapture %}
+            {% assign bubble_direction = 'left' %}
+            {% include custom/speech_bubble.html %}
+
+            {% capture bubble_text %}Are you done?{% endcapture %}
+            {% assign bubble_direction = 'right' %}
+            {% include custom/speech_bubble.html %}
+
+            {% capture bubble_text %}That's all I have, but words can only go so far.{% endcapture %}
+            {% assign bubble_direction = 'left' %}
+            {% include custom/speech_bubble.html %}
+
+          </section>
+
+      </div><!-- .col-sm-10 <-->
+      <div id="tools_section" class="hidden-xs hidden-sm col-md-3">
+        <img class="tool_logo" src="images/other_images/google_tag_manager_logo.png">
+        <img class="tool_logo" src="images/other_images/google_analytics_logo.png">
+        <img class="tool_logo" src="images/other_images/google_spreadsheet_logo.png">
+        <img class="tool_logo" src="images/other_images/calltrackingmetrics_logo.png">
+        <img class="tool_logo" src="images/other_images/mixpanel_logo.png">
+        <img class="tool_logo" src="images/other_images/mailchimp_logo.png">
+        <img class="tool_logo" src="images/other_images/hubspot_logo.png">
+        <img class="tool_logo" src="images/other_images/shopify_logo.png">
+        <img class="tool_logo" src="images/other_images/facebook_ads_logo.png">
+        <img class="tool_logo" src="images/other_images/adwords_logo.png">
+        <img class="tool_logo" src="images/other_images/SEMrush_logo.png">
+        <img class="tool_logo" src="images/other_images/similarweb_logo.png">
+        <img class="tool_logo" src="images/other_images/olark_logo.png">
+        <img class="tool_logo" src="images/other_images/kibana_logo.png">
+        <img class="tool_logo" src="images/other_images/crazy_egg_logo.png">
+        <img class="tool_logo" src="images/other_images/hotjar_logo.png">
+        <img class="tool_logo" src="images/other_images/optimizely_logo.png">
+        <img class="tool_logo" src="images/other_images/vwo_logo.png">
+        <img class="tool_logo" src="images/other_images/convert_logo.png">
+      </div>      
+
+    </div><!-- .content-wrapper <-->
+  </article><!-- .section-wrapper <-->
+  <!-- ==================== END: SECTION TYPE: Services ==================== <-->
+
+  <!-- ==================== SECTION TYPE: Contact ==================== <-->
+  <!-- This type of section should contain text (contact details) and a contact form <-->
+  <!-- FOR EACH SECTION <article class="section-wrapper".. :
+       - remember to use a unique id, 
+       - (optional) set a "data-custom-background-img" attribute with a link to custom background image which will be used when the viewer scrolls to this section <-->
+  <article id="contact" class="section-wrapper clearfix" data-custom-background-img="images/other_images/bg3.jpg">
+    <div class="content-wrapper clearfix">
+      <div class="col-xs-12 col-sm-12 col-md-9">
+      
+        <center><h1 class="section-title">Contact</h1></center>
+        
+        <section class="feature-text">
+            {% capture bubble_text %}Are you implying actions need to be taken?{% endcapture %}
+            {% assign bubble_direction = 'right' %}
+            {% include custom/speech_bubble.html %}
+
+            {% capture bubble_text %}Yes, contacting me definitely comes to mind.{% endcapture %}
+            {% assign bubble_direction = 'left' %}
+            {% include custom/speech_bubble.html %}
+
+        </section>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-9">
+        <div class="business-card wow bounceInUp" data-wow-delay="1s">
+
+            <!-- CONTACT DETAILS <-->
+              <div class="left col-xs-12 col-sm-12 col-md-12">
+                <p class="title">Yuval Qen</p>
+                <p class="subtitle">Web Data Strategist</p>
+              </div>
+            <!-- END: CONTACT DETAILS <-->
+
+            <!-- CONTACT FORM <-->
+            <div class="left col-xs-12 col-sm-7 col-md-7">
+              <p class="contact_line first"><a href="mailto:hi@yuvalqen.com"><i class="fa fa-envelope"></i>&nbsp;hi@yuvalqen.com</a></p>
+              <p class="contact_line"><a href="tel:+972-52-331-3878"><i class="fa fa-phone"></i>&nbsp;(+972) 523 313 878</a></p>
+              <p class="contact_line"><a href="http://yuvalqen.com"><i class="fa fa-globe"></i>&nbsp;www.yuvalqen.com</a></p>
+              <p class="contact_line"><a href="https://www.linkedin.com/in/yuvalc/"><i class="fa fa-linkedin"></i>&nbsp;Yuval Qen</a></p>
+
+            </div>
+            <div class="left col-xs-12 col-sm-5 col-md-5">
+              <img class="logo" src="images/other_images/logo_black.png" alt="Yuval Qen">
+            </div>
+        </div>
+      </div>
+
+      <div class="col-xs-12 col-sm-12 col-md-9">
+        
+        <section class="feature-text">
+            {% capture bubble_text %}Website, inside a business card, inside a website? Clever.{% endcapture %}
+            {% assign bubble_direction = 'right' %}
+            {% assign bubble_wow_delay = '10s' %}
+            {% include custom/speech_bubble.html %}
+        </section>
+      </div>
+  </article><!-- .section-wrapper <-->
+  <!-- ==================== ENDL SECTION TYPE: Contact ==================== <-->
+
+</section><!-- #main-content <-->
+<!-- ==================== END: MAIN CONTENT ==================== <-->

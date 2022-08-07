@@ -1,0 +1,217 @@
+<html>
+<script src="/js/awesomplete/awesomplete.min.js"></script>
+<link rel="stylesheet" href="/stylesheets/awesomplete/awesomplete.css" />
+<link rel='stylesheet' id='bootstrap-css'  href='/stylesheets/bootstrap/bootstrap.css' type='text/css' media='all' />
+<style>
+form#transaction-form table { max-width: 500px; }
+form#transaction-form table td { border: 0; padding: 5px;}
+form#transaction-form div.awesomplete { width: 100%;}
+form#transaction-form div.date-picker { display: none; }
+form#transaction-form div.date-picker label { display: block; }
+</style>
+<body style="margin: 20px;">
+<h1 id="dynamic-title"></h1>
+<form id="transaction-form" autocomplete="off">
+<table>
+<tbody>
+<tr>
+<td align="left">Payer:</td>
+<td align="left">
+  <input tabindex="20" style="width: 100%;" name="payer" type="text" required autocomplete="off"/>
+  <div class="date-picker payer">
+    <label>Start Date</label><input tabindex="21" name="payer_startDate" type="date" onchange="updateDates(this)" required/>
+  </div>
+  <div class="date-picker payer">
+    <label>End Date</label><input tabindex="22" name="payer_endDate" type="date" onchange="updateDates(this)" required/>
+  </div>
+</td>
+</tr>
+<tr>
+<td align="left">Agent:</td>
+<td align="left"><input tabindex="30" style="width: 100%;" name="agent" type="text" autocomplete="off"/></td>
+</tr>
+<tr>
+<td align="left">Beneficiary:</td>
+<td align="left"><input tabindex="50" style="width: 100%;" name="beneficiary" type="text" required autocomplete="off"/>
+  <div class="date-picker beneficiary">
+    <label>Start Date</label><input tabindex="51" name="beneficiary_startDate" type="date" onchange="updateDates(this)"/>
+  </div>
+  <div class="date-picker beneficiary">
+    <label>End Date</label><input tabindex="52" name="beneficiary_endDate" type="date" onchange="updateDates(this)"/>
+  </div>
+</td>
+</tr>
+<tr>
+<td align="center"><input tabindex="60" value="Next" type="submit" /></td>
+<td style="width: 100%;"></td>
+</tr>
+</tbody>
+</table>
+</form>
+<a onclick="eraseCookie('cfg'); document.location = document.location.toString().split('?')[0];">Erase preselection</a>
+<script>
+function createCookie(name, value, days) {
+    var expires;
+    if (days) {
+        var date = new Date();
+        date.setTime(date.getTime()+(days*24*60*60*1000));
+        expires = "; expires="+date.toGMTString();
+    }
+    else {
+        expires = "";
+    }
+    document.cookie = name+"="+value+expires+"; path=/";
+}
+function eraseCookie(name) {
+    createCookie(name,"",-1);
+}
+function readCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0;ca.length>i;i++) {
+        var c = ca[i];
+        while (c.charAt(0) === ' ') {
+            c = c.substring(1,c.length);
+        }
+        if (c.indexOf(nameEQ) === 0) {
+            return c.substring(nameEQ.length,c.length);
+        }
+    }
+    return null;
+}
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+function submitForm(e) {
+  e.preventDefault();
+  var payer = document.querySelector("form#transaction-form input[name^='payer-']").value;
+  var agent = document.querySelector("form#transaction-form input[name^='agent-']").value;
+  var beneficiary = document.querySelector("form#transaction-form input[name^='beneficiary-']").value;
+  document.location = "https://docs.google.com/forms/d/e/1FAIpQLSez3dn4Q4s_fxm_bAvreVQkin0i94wqByE3obydqAsks_VBfg/viewform?usp=pp_url&entry.1627783589="+payer+"&entry.1563342063="+agent+"&entry.1110241002="+beneficiary;
+}
+function configureInput(input, options) {
+  var awesomepleteForm = new Awesomplete(input, {
+    minChars: 0,
+    maxItems: 20,
+    autoFirst: true,
+    filter: function (text, input) {
+      	return (text.toLowerCase().indexOf(input.toLowerCase()) === 0) && (text.slice(0, -1).split('/').length === 
+  input.split('/').length);
+    },
+    replace: function (text) {
+    	this.input.value = text;
+        var furtherOptions = options.filter(function (opt) { return (opt.toLowerCase().indexOf(text.toLowerCase()) === 0) && (opt.slice(0, -1).split('/').length === 
+  text.split('/').length) });
+        if (furtherOptions.length === 1 && furtherOptions[0] != text) {
+            this.replace(furtherOptions[0]);
+        }
+    },
+    sort: function(a, b) {
+        return a > b;
+    },
+    list: options});
+  input.addEventListener('awesomplete-selectcomplete', function (e) {
+    if (e.text.value.slice(-1) == '/') {
+      awesomepleteForm.open();
+      awesomepleteForm.evaluate();
+    }
+    document.querySelectorAll('div.date-picker.'+input.name.split('-')[0]).forEach(function(el) { 
+      el.style.display = e.text.value.slice(-22) == "/DD.MM.YYYY-DD.MM.YYYY" ? 'inline-block' : 'none'
+    });
+    document.querySelectorAll('div.date-picker').forEach(function (el) {
+      el.querySelector('input').required = (el.style.display == 'none') ? false : true;
+    });
+  });
+  input.addEventListener('focus', function (e) {
+    awesomepleteForm.open();
+    awesomepleteForm.evaluate();
+  });
+}
+function updateDates(input) {
+  regexToReplace = {
+    startDate: /[D0-9]{2}\.[M0-9]{2}\.[Y0-9]{4}-/i,
+    endDate: /-[D0-9]{2}\.[M0-9]{2}\.[Y0-9]{4}/i
+  };
+  if (input.value.length > 10 || input.value.length == 0) { return; }
+  var associatedInputName = input.name.split('-')[0].split('_')[0];
+  var startDateOrEndDate = input.name.split('-')[0].split('_')[1];
+  var dateString = (startDateOrEndDate == "endDate" ? "-" : "") + input.value.split('-').reverse().join('.') + (startDateOrEndDate == "startDate" ? "-" : "");
+  var associatedInput = document.querySelectorAll("input[name^='"+ associatedInputName +"-']")[0];
+  associatedInput.value = associatedInput.value.replace(regexToReplace[startDateOrEndDate], dateString);
+}
+function cartesian() {
+    var r = [], arg = arguments, max = arg.length-1;
+    function helper(arr, i) {
+        for (var j=0, l=arg[i].length; j<l; j++) {
+            var a = arr.slice(0); // clone arr
+            a.push(arg[i][j]);
+            if (i==max)
+                r.push(a);
+            else
+                helper(a, i+1);
+        }
+    }
+    helper([], 0);
+    return r.map(function(e) {return (e.join('').slice(0, -1).indexOf('//') >=0) ? "" : e.join('').replace('//', '/')}).filter(function (e) { return e.length > 0 });
+}
+var config = {
+  bills: ["Common Cost", "Electricity", "Gas", "Internet", "Management Fee", "Water", "Insurance", "Tourism Tax"],
+  landlords: ["Amit", "Amatzia", "Yuval", "Giora"],
+  expenses: ["Maintenance", "Legal Fees", "Tax/", "Tax/Purchase Tax", "Personal Expenses", "Renovation/", "Renovation/Construction Labor", "Renovation/Worker Accomodations", "Renovation/Worker Personal Expenses", "Renovation/Electrician", "Renovation/Plumber", "Renovation/White Materials", "Renovation/Black Materials", "Renovation/Furnitures", "Renovation/Appliances", "Renovation/Accessories", "Renovation/Travel Costs", "Renovation/Assembly Labor", "Renovation/Cleaning Labor", "Renovation/Waste Disposal", "Renovation/Static Engineer", "Renovation/Utility Company Fees", "Renovation/Balance-Amit", "Renovation/Balance-Yossi", "Renovation/Balance-Safe"],
+  employees: ["Adrienn", "Gilad", "Joseph", "Lili"],
+  assets: ["Ulloi 66/", "Ulloi 66/Whole", "Ulloi 66/Right", "Ulloi 66/Near Left", "Ulloi 66/Far Left", "Jozsef Korut 33", "Nepszinhaz 31/", "Nepszinhaz 31/Whole", "Nepszinhaz 31/Apt 3", "Nepszinhaz 31/Apt 3a", "Bem Rakpart 15", "Nap 4", "Berkocsis 19/", "Berkocsis 19/Whole", "Berkocsis 19/Small", "Berkocsis 19/Big", "Bokay Janos 50", "Hogyes 3", "Vig 18", "Berkocsis 21", "Garay 29-31", "Nemet 13/", "Nemet 13/Whole", "Nemet 13/Outer", "Nemet 13/Inner"],
+  tenant: ["Tenant"],
+  title: "Transaction Submission Form"
+}
+if (getParameterByName("cfg")) {
+  createCookie("cfg", getParameterByName("cfg"));
+}
+overrideConfig = JSON.parse(readCookie("cfg"));
+for (var key in overrideConfig) {
+    if (overrideConfig.hasOwnProperty(key)) {
+        config[key] = overrideConfig[key];
+    }
+}
+var payerOptions = [].concat.apply([], [
+  cartesian(config["tenant"], '/'),
+  cartesian(config["tenant"], '/', ['Deposit', 'Bills', 'Rent'], '/'),
+  cartesian(config["tenant"], '/', ['Deposit'], '/', config['assets']),
+  cartesian(config["tenant"], '/', ['Bills', 'Rent'], '/', config['assets'], '/'),
+  cartesian(config["tenant"], '/', ['Bills', 'Rent'], '/', config['assets'], '/', ["DD.MM.YYYY-DD.MM.YYYY"]),
+  cartesian(["Renovation/", "Renovation/Balance-Amit", "Renovation/Balance-Yossi", "Renovation/Balance-Safe"], '/'),
+  cartesian(["Renovation/", "Renovation/Balance-Amit", "Renovation/Balance-Yossi", "Renovation/Balance-Safe"], '/', config['assets']),
+  config['landlords']
+]);
+var beneficiaryOptions = [].concat.apply([], [
+  cartesian(config['bills'], '/'),
+  cartesian(config['bills'], '/', config['assets'], '/'),
+  cartesian(config['bills'], '/', config['assets'], '/', ["DD.MM.YYYY-DD.MM.YYYY"]),
+  cartesian(config['expenses'], '/'),
+  cartesian(config['expenses'], '/', config['assets']),
+  cartesian(config["tenant"], '/'),
+  cartesian(config["tenant"], '/', ['Deposit'], '/'),
+  cartesian(config["tenant"], '/', ['Deposit'], '/', config['assets']),
+  config['landlords']
+]);
+var agentOptions = [].concat.apply([], [
+  config['landlords'],
+  config['employees']
+]);
+var salt = Math.floor(Math.random()*10000000);
+document.querySelectorAll("form#transaction-form input").forEach(function (el) {
+      el.name = el.name + '-' + salt;
+    });
+configureInput(document.querySelector("form#transaction-form input[name^='payer-']"), payerOptions);
+configureInput(document.querySelector("form#transaction-form input[name^='agent-']"), agentOptions);
+configureInput(document.querySelector("form#transaction-form input[name^='beneficiary-']"), beneficiaryOptions);
+document.querySelector("form#transaction-form").addEventListener('submit', submitForm);
+document.getElementById("dynamic-title").innerHTML = config['title'];
+</script>
+</body>
+</html>
