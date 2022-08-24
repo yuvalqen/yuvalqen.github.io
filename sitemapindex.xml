@@ -6,15 +6,11 @@
     xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <sitemap>
-  <loc>https://yuvalqen.com/galleries/rss.xml</loc>
-  <lastmod>2022-08-22T15:01:00Z</lastmod>
- </sitemap>
- <sitemap>
   <loc>https://yuvalqen.com/rss.xml</loc>
   <lastmod>2022-08-09T17:37:00Z</lastmod>
  </sitemap>
  <sitemap>
   <loc>https://yuvalqen.com/sitemap.xml</loc>
-  <lastmod>2022-08-23T19:42:00Z</lastmod>
+  <lastmod>2022-08-24T19:02:00Z</lastmod>
  </sitemap>
 </sitemapindex>

@@ -7,7 +7,7 @@
                         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
  <url>
   <loc>https://yuvalqen.com/</loc>
-  <lastmod>2022-08-23T19:42:00Z</lastmod>
+  <lastmod>2022-08-24T18:57:00Z</lastmod>
  </url>
  <url>
   <loc>https://yuvalqen.com/blog/</loc>
@@ -15,14 +15,6 @@
  </url>
  <url>
   <loc>https://yuvalqen.com/categories/</loc>
-  <lastmod>2022-08-09T17:37:00Z</lastmod>
- </url>
- <url>
-  <loc>https://yuvalqen.com/galleries/</loc>
-  <lastmod>2022-08-09T17:37:00Z</lastmod>
- </url>
- <url>
-  <loc>https://yuvalqen.com/indexhtml/</loc>
   <lastmod>2022-08-09T17:37:00Z</lastmod>
  </url>
  <url>
@@ -34,23 +26,11 @@
   <lastmod>2022-08-23T19:34:00Z</lastmod>
  </url>
  <url>
-  <loc>https://yuvalqen.com/submit-a-transaction-varna/</loc>
-  <lastmod>2022-08-23T19:25:00Z</lastmod>
- </url>
- <url>
   <loc>https://yuvalqen.com/submit-a-transaction.html/</loc>
   <lastmod>2022-08-23T19:42:00Z</lastmod>
  </url>
  <url>
-  <loc>https://yuvalqen.com/submit-a-transaction/</loc>
-  <lastmod>2022-08-23T19:41:00Z</lastmod>
- </url>
- <url>
   <loc>https://yuvalqen.com/submit-an-estimate-varna.html/</loc>
   <lastmod>2022-08-23T19:42:00Z</lastmod>
- </url>
- <url>
-  <loc>https://yuvalqen.com/submit-an-estimate-varna/</loc>
-  <lastmod>2022-08-23T19:41:00Z</lastmod>
  </url>
 </urlset>
