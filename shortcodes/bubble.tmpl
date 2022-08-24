@@ -15,7 +15,7 @@
 			% if client_logos:
 				<center class="trusted_by">
 				% for href, img, size in [cl.split(',') for cl in client_logos.split(';')]:
-					% if href != '':
+					% if href.strip() != '':
 					<a href="${href.strip()}" target="blank">
 					% endif
 						<img class="client_logo ${ {'m': '', 's': 'smaller', 'xs': 'smallest'}[size.strip()] }" src="/images/logos/${img.strip()}">
