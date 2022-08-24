@@ -1,0 +1,6 @@
+Sitemap: https://yuvalqen.com/sitemapindex.xml
+
+User-Agent: *
+Disallow: /archive.html
+Disallow: /category/*.html
+Host: yuvalqen.com
