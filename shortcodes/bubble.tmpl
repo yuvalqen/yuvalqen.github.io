@@ -1,0 +1,32 @@
+<div class="row grid clearfix">
+	<div class="speech col-md-10 col-xs-11
+	% if direction == 'left':
+	left fadeInLeft
+	% else:
+	right fadeInRight col-md-offset-2 col-xs-offset-1
+	% endif
+	wow" data-wow-delay="${wow_delay or '0.3s'}">
+		<div class="speech_bubble_content">
+			% if direction == 'right':
+			<i>${data}</i>
+			% else:
+			${data}
+			% endif
+			% if client_logos:
+				<center class="trusted_by">
+				% for href, img, size in [cl.split(',') for cl in client_logos.split(';')]:
+					% if href != '':
+					<a href="${href.strip()}" target="blank">
+					% endif
+						<img class="client_logo ${ {'m': '', 's': 'smaller', 'xs': 'smallest'}[size.strip()] }" src="/images/logos/${img.strip()}">
+					% if href != '':
+					</a>
+					% endif
+				% endfor
+				</center>
+			% endif
+			<div class="speech_bottom_border">
+			</div>
+		</div>
+	</div>
+</div>

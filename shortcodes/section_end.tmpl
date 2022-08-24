@@ -1,0 +1,19 @@
+                        </div>            
+                  </section>
+            </div>
+            % if tools:
+                <div id="tools_section" class="hidden-xs hidden-sm col-md-3">
+                % for logo in tools.split(';'):
+                    <img class="tool_logo" src="images/logos/${logo.strip()}">
+                % endfor
+                </div>
+            % endif
+            % if portrait:
+                <div class="hidden-xs hidden-sm col-md-3">
+                    <img class="portrait" src="images/${portrait.strip()}">
+                </div>      
+            % endif
+% if no_article == UNDEFINED:
+      </div>
+</article>
+% endif

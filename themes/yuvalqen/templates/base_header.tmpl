@@ -1,0 +1,25 @@
+## -*- coding: utf-8 -*-
+<%namespace name="base" file="base_helper.tmpl" import="*"/>
+
+<%def name="html_header()">
+    <section id="left-sidebar">
+      
+      <div class="logo">
+        <a href="#intro-section" class="link-scroll"><img src="${logo_url}" alt="${blog_author}"></a>        
+      </div><!-- .logo <-->
+      
+      <div id="mobile-menu-icon" class="visible-xs" onClick="toggle_main_menu();"><span class="glyphicon glyphicon-th"></span></div>
+
+      <ul id="main-menu">
+        <li id="menu-item-intro-section" class="menu-item scroll"><a href="#intro-section">Intro</a></li>
+        <li id="menu-item-services" class="menu-item scroll"><a href="#services">Services</a></li>
+        <li id="menu-item-contact" class="menu-item scroll"><a href="#contact">Contact</a></li>
+      </ul>
+
+    </section>
+
+    ${template_hooks['page_header']()}
+
+</%def>
+
+

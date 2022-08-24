@@ -1,0 +1,45 @@
+<%inherit file="page.tmpl"/>
+
+<%block name="extra_head">
+    ${parent.extra_head()}
+
+	<!-- Jquery and Bootstrap -->
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="lib/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Styles -->
+    <link href="css/styles.css" rel="stylesheet" type="text/css">
+    <link href="css/custom.css" rel="stylesheet" type="text/css">
+
+    <!-- Easing - for transitions and effects -->
+    <script src="js/jquery.easing.1.3.js"></script>
+
+    <!-- background image strech script -->
+    <script src="lib/vegas/jquery.vegas.min.js"></script>
+	<link href="lib/vegas/jquery.vegas.min.css" rel="stylesheet">
+    
+    <!-- detect mobile browsers -->
+    <script src="js/detectmobilebrowser.js"></script>
+
+    <!-- detect scrolling -->
+    <script src="js/jquery.scrollstop.min.js"></script>
+
+    <!-- intro animations -->
+    <link href="lib/wow/animate.css" rel="stylesheet">
+    <script src="lib/wow/wow.min.js"></script>
+
+    <!-- Custom functions for this theme -->
+    <script src="js/functions.js"></script>
+    <script src="js/initialise-functions.js"></script>
+
+    <!-- Custom functions -->
+    <script src="js/custom.js"></script>
+
+</%block>
+
+<%block name="body_attributes">
+ data-default-background-img="images/bg1.jpg" data-overlay="true" data-overlay-opacity="0.6"
+</%block>
