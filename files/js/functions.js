@@ -140,7 +140,7 @@ function sections_content_vertical_position()
             else
             {
                 content_wrapper.css({
-                    "position":"absolute"
+                    "position":"relative"
                 });
             }
                        
