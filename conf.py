@@ -17,7 +17,7 @@ import time
 
 # Data about this site
 BLOG_AUTHOR = "Yuval Qen"  # (translatable)
-BLOG_TITLE = "Yuval&nbsp;Qen - Web&nbsp;Data&nbsp;Strategist"  # (translatable)
+BLOG_TITLE = "Yuval Qen - Web Data Strategist"  # (translatable)
 # This is the main URL for your site. It will be used
 # in a prominent link. Don't forget the protocol (http/https)!
 SITE_URL = "https://yuvalqen.com/"
