@@ -121,13 +121,14 @@ img.portrait {
 
 .trusted_by .client_logo {
     max-height: 60px;
+    max-width: 110px;
     margin: 10px;
   }  
 .trusted_by .client_logo.smaller {
-    max-height: 40px;
+    max-height: 35px;
   }
 .trusted_by  .client_logo.smallest {
-    max-height: 30px;
+    max-height: 20px;
   }
 
 .grid .fa.icon img {
