@@ -101,7 +101,8 @@ img.portrait {
 .business-card .subtitle { margin: 5px 0;}
 .business-card .logo { display: block; margin: 38px auto;}
 .business-card .contact_line { margin: 7px 0px; }
-.business-card .left, .business-card .right { text-align: center; }
+.business-card .contact_line i.fa { display: inline-block; width: 1.2em; }
+.business-card .left, .business-card .right { text-align: left; }
 
 @media (min-width: 768px) {
   .business-card { width: 400px; height: 215px; }
