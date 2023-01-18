@@ -25,7 +25,7 @@ SITE_URL = "https://yuvalqen.com/"
 # If not set, defaults to SITE_URL
 # BASE_URL = "https://yuvalqen.com/"
 BLOG_EMAIL = "hi@yuvalqen.com"
-BLOG_DESCRIPTION = "This is a demo site for Nikola."  # (translatable)
+BLOG_DESCRIPTION = "Services by Yuval Qen."  # (translatable)
 
 # Nikola is multilingual!
 #
