@@ -1,0 +1,14 @@
+<div class="anim_obj" data-anim-steps="${steps}">
+% if img:
+	<img src="images/${img}">
+% endif
+% if portrait:
+	<img class="portrait" src="images/${portrait}">
+% endif
+% if fa_icon:
+	<i class="fa ${fa_icon}"></i>
+% endif
+% if text:
+	<div>${text}</div>
+% endif
+</div>
