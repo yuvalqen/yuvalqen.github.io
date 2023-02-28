@@ -14,7 +14,7 @@ div.speech div.speech_bubble_content {
   margin: 10px;
 }
 
-div.speech.right div.speech_bubble_content {
+div.speech.left div.speech_bubble_content {
   color: #AAA;
   border: 2px solid #AAA;
 }
@@ -131,6 +131,21 @@ img.portrait {
 .trusted_by  .client_logo.smallest {
     max-height: 20px;
   }
+
+.anim_obj {
+  position: absolute;
+  display: flex; justify-content: center; align-items: center; text-align: center;
+  transform: translate(-50%, -50%);
+}
+
+.anim_obj i {
+  font-size: 2em;
+}
+
+.anim_obj img {
+  height: 4em;
+  width: 4em;
+}
 
 .grid .fa.icon img {
   height: 50px;

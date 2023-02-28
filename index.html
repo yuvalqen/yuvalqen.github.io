@@ -54,7 +54,7 @@ Is that all?
 <meta property="article:published_time" content="2022-08-09T20:47:39+03:00">
 <!-- Jquery and Bootstrap --><link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="lib/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
-<link href="css/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+<link href="css/font-awesome/css/all.min.css" rel="stylesheet">
 <script src="js/jquery-3.6.0.min.js"></script><script src="lib/bootstrap/js/bootstrap.min.js"></script><!-- Styles --><link href="css/styles.css" rel="stylesheet" type="text/css">
 <link href="css/custom.css" rel="stylesheet" type="text/css">
 <!-- Easing - for transitions and effects --><script src="js/jquery.easing.1.3.js"></script><!-- background image strech script --><script src="lib/vegas/jquery.vegas.min.js"></script><link href="lib/vegas/jquery.vegas.min.css" rel="stylesheet">
@@ -81,12 +81,12 @@ Is that all?
 
 <div class="row grid clearfix">
 	<div class="speech col-md-10 col-xs-11
-	left fadeInLeft
+	right fadeInRight col-md-offset-2 col-xs-offset-1
 	wow" data-wow-delay="0.3s">
 		<div class="speech_bubble_content">
-			
+			<i>
 I’ll setup the process for data driven decisions in your website.
-
+</i>
 			<div class="speech_bottom_border">
 			</div>
 		</div>
@@ -95,25 +95,11 @@ I’ll setup the process for data driven decisions in your website.
 
 <div class="row grid clearfix">
 	<div class="speech col-md-10 col-xs-11
-	right fadeInRight col-md-offset-2 col-xs-offset-1
+	left fadeInLeft
 	wow" data-wow-delay="0.5s">
 		<div class="speech_bubble_content">
-			<i>
-Is that all?
-</i>
-			<div class="speech_bottom_border">
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="row grid clearfix">
-	<div class="speech col-md-10 col-xs-11
-	left fadeInLeft
-	wow" data-wow-delay="0.7s">
-		<div class="speech_bubble_content">
 			
-If you have a money-making website, and you like to maximize your profit, it should hit the spot.
+Is that all?
 
 			<div class="speech_bottom_border">
 			</div>
@@ -124,10 +110,10 @@ If you have a money-making website, and you like to maximize your profit, it sho
 <div class="row grid clearfix">
 	<div class="speech col-md-10 col-xs-11
 	right fadeInRight col-md-offset-2 col-xs-offset-1
-	wow" data-wow-delay="0.9s">
+	wow" data-wow-delay="0.7s">
 		<div class="speech_bubble_content">
 			<i>
-If you put it that way…
+If you have a money-making website, and you like to maximize your profit, it should hit the spot.
 </i>
 			<div class="speech_bottom_border">
 			</div>
@@ -138,11 +124,25 @@ If you put it that way…
 <div class="row grid clearfix">
 	<div class="speech col-md-10 col-xs-11
 	left fadeInLeft
-	wow" data-wow-delay="1.1s">
+	wow" data-wow-delay="0.9s">
 		<div class="speech_bubble_content">
 			
-Don’t take my word for it, ask these guys:
+If you put it that way…
 
+			<div class="speech_bottom_border">
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="row grid clearfix">
+	<div class="speech col-md-10 col-xs-11
+	right fadeInRight col-md-offset-2 col-xs-offset-1
+	wow" data-wow-delay="1.1s">
+		<div class="speech_bubble_content">
+			<i>
+Don’t take my word for it, ask these guys:
+</i>
 				<center class="trusted_by">
 					<a href="//azrieli.com" target="blank">
 						<img class="client_logo " src="images/logos/azrieli_logo.png"></a>
@@ -178,9 +178,7 @@ Don’t take my word for it, ask these guys:
 						<img class="client_logo smallest" src="images/logos/waldo_logo.png"></a>
 						<img class="client_logo smallest" src="images/logos/shoppaul_logo.png"><a href="//www.clicksmob.com" target="blank">
 						<img class="client_logo smallest" src="images/logos/clicksmob_logo.png"></a>
-						<img class="client_logo smallest" src="images/logos/legacy_global_sports_logo.png"><img class="client_logo smallest" src="images/logos/leap_logo.png"><a href="//www.craftvapery.com" target="blank">
-						<img class="client_logo smallest" src="images/logos/craftvapery_logo.png"></a>
-					<a href="//www.worldofjudaica.com" target="blank">
+						<img class="client_logo smallest" src="images/logos/legacy_global_sports_logo.png"><img class="client_logo smallest" src="images/logos/leap_logo.png"><a href="//www.worldofjudaica.com" target="blank">
 						<img class="client_logo smallest" src="images/logos/woj_logo.png"></a>
 				</center>
 			<div class="speech_bottom_border">
@@ -201,27 +199,62 @@ Don’t take my word for it, ask these guys:
       <center><h1 class="section-title">Services</h1></center>
       <section class="feature-text"><div class="row grid clearfix">
 
-<div class="row grid clearfix">
-	<div class="speech col-md-10 col-xs-11
-	left fadeInLeft
-	wow" data-wow-delay="0.3s">
-		<div class="speech_bubble_content">
-			
-A decade ago, your website needed a Google Analytics integration and you were good to go. Nowadays, to be competitive, your website needs ad platform pixels, marketing automation pixels, A/B testing, a GDPR/CCNA compliance solution, an integration with CRM/DWH and so on.
+<script>
+  function doubleEasing(x) {
+    return x < 0.5 ? easing(x * 2) / 2 : easing(x * 2 - 1) / 2 + 0.5;
+  }
+  function easing(x) {
+    return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+  }
 
-			<div class="speech_bottom_border">
-			</div>
-		</div>
-	</div>
-</div>
+  window.addEventListener("scroll", function(e) {
+    var animationRect = $("#services_animation")[0];
+    var bcr = animationRect.getBoundingClientRect();
+    var scrollProgress =  document.documentElement.clientHeight-bcr.top;
 
-<div class="row grid clearfix">
+    console.log(scrollProgress);
+
+    if (scrollProgress > 0 && scrollProgress < bcr.height+document.documentElement.clientHeight) {
+      $(animationRect).find(".anim_obj").each(function () {
+        var steps = JSON.parse(this.getAttribute("data-anim-steps"));
+        var step_found = false;
+        var scrollProgressSub = scrollProgress;
+        for (var i = 0; i < steps.length; i++) {
+          scrollProgressSub -= steps[i][0];
+          if (scrollProgressSub < 0) {
+            var step_progress = (steps[i][0] + scrollProgressSub)/steps[i][0];
+            console.log(i, step_progress);
+            if (i > 0 && steps[i].length == 3 && steps[i-1].length == 3) {
+              step_found = true;
+              this.style.top = (steps[i-1][1] + (steps[i][1] - steps[i-1][1]) * step_progress) + 'px';
+              this.style.left = (steps[i-1][2] + (steps[i][2] - steps[i-1][2]) * doubleEasing(step_progress)) + '%';
+
+              
+              const fade_in_threshold = 30;
+              var scroll_from_step_start = scrollProgressSub + steps[i][0];
+              var scroll_from_step_end = -scrollProgressSub;
+              if (((i < 2) || (steps[i-2].length == 1)) && scroll_from_step_start < fade_in_threshold) { // first step
+                this.style.opacity = scroll_from_step_start / fade_in_threshold;
+              } else if (((i > steps.length - 2) || (steps[i+1].length == 1)) && scroll_from_step_end < fade_in_threshold) { // last step
+                this.style.opacity = scroll_from_step_end / fade_in_threshold;
+              } else {
+                this.style.opacity = 1;
+              }
+            }
+            break;
+          }
+        }
+        this.style.display = step_found ? 'block' : 'none';
+      });
+    }
+  });
+</script><div class="row grid clearfix">
 	<div class="speech col-md-10 col-xs-11
 	right fadeInRight col-md-offset-2 col-xs-offset-1
-	wow" data-wow-delay="0.3s">
+	wow" data-wow-delay="0.7s">
 		<div class="speech_bubble_content">
 			<i>
-Oh boy, did we evolve as an industry…
+Here is how a typical project looks like:
 </i>
 			<div class="speech_bottom_border">
 			</div>
@@ -229,102 +262,180 @@ Oh boy, did we evolve as an industry…
 	</div>
 </div>
 
+<div id="services_animation" style="height: 1600px; margin-top: 10px; position: relative;">
+  <div class="anim_obj" data-anim-steps="[
+  [0, 50, 80],
+  [250, 50, 80],
+  [1350, 1400, 80],
+  [3000, 1400, 80]
+  ]">
+	<img class="portrait" src="images/portrait.jpg"><div>Yuval</div>
+</div>
+  <div class="anim_obj" data-anim-steps="[
+  [0, 50, 20],
+  [1250, 50, 20],
+  [200, 1250, 20],
+  [2000, 1250, 20]
+  ]">
+	<i class="fa fa-user-tie"></i>
+	<div>Product Team</div>
+</div>
+  <div class="anim_obj" data-anim-steps="[
+  [250, 50, 25],
+  [100, 150, 75]
+  ]">
+	<i class="fa fa-solid fa-diagram-next"></i>
+	<div>UX Flows Spec</div>
+</div>
+  <div class="anim_obj" data-anim-steps="[
+  [0, 200, 20],
+  [1300, 200, 20],
+  [200, 1350, 20],
+  [2000, 1350, 20]
+  ]">
+	<i class="fa fa-chalkboard-user"></i>
+	<div>Marketing Team</div>
+</div>
+  <div class="anim_obj" data-anim-steps="[
+  [400, 200, 25],
+  [100, 300, 75]
+  ]">
+	<i class="fa fa-solid fa-rectangle-ad"></i>
+	<div>Pixel Spec</div>
+</div>
+  <div class="anim_obj" data-anim-steps="[
+  [0, 450, 20],
+  [1350, 450, 20],
+  [200, 1450, 20],
+  [2000, 1450, 20]
+  ]">
+	<i class="fa fa-users-gear"></i>
+	<div>R&amp;D Team</div>
+</div>
+  <div class="anim_obj" data-anim-steps="[
+  [550, 350, 75],
+  [100, 450, 25]
+  ]">
+	<i class="fa fa-regular fa-file-code"></i>
+	<div>Datalayer Spec</div>
+</div>
+  <div class="anim_obj" data-anim-steps="[
+  [700, 450, 25],
+  [100, 600, 75]
+  ]">
+	<i class="fa fa-brands fa-js"></i>
+	<div>Datalayer<br>Implementation</div>
+</div>
+  <div class="anim_obj" data-anim-steps="[
+  [0, 750, 20],
+  [950, 750, 20],
+  [200, 950, 20],
+  [2000, 950, 20]
+  ]">
+	<img src="images/logos/google_tag_manager_logo.png"><div>Google<br>Tag Manager</div>
+</div>
+  <div class="anim_obj" data-anim-steps="[
+  [850, 650, 75],
+  [100, 750, 25]
+  ]">
+	<i class="fa fa fa-tags"></i>
+	<div>Marketing<br>Pixels</div>
+</div>
+  <div class="anim_obj" data-anim-steps="[
+  [900, 700, 75],
+  [100, 800, 25]
+  ]">
+	<i class="fa fa fa-tags"></i>
+	<div>Marketing<br>Automation</div>
+</div>
+  <div class="anim_obj" data-anim-steps="[
+  [950, 750, 75],
+  [100, 850, 25]
+  ]">
+	<i class="fa fa fa-tag"></i>
+	<div>GDPR/CCNA<br>Consent<br>Manager</div>
+</div>
+  <div class="anim_obj" data-anim-steps="[
+  [1000, 800, 75],
+  [100, 900, 25]
+  ]">
+	<i class="fa fa fa-tag"></i>
+	<div>A/B Testing<br>Solution</div>
+</div>
+  <div class="anim_obj" data-anim-steps="[
+  [1050, 850, 75],
+  [100, 950, 25]
+  ]">
+	<i class="fa fa fa-tags"></i>
+	<div>BI Pixels</div>
+</div>
+  <div class="anim_obj" data-anim-steps="[
+  [0, 1100, 20],
+  [3000, 1100, 20]
+  ]">
+	<i class="fa fa-brands fa-python"></i>
+	<div>Python/Selenium</div>
+</div>
+  <div class="anim_obj" data-anim-steps="[
+  [1200, 1000, 75],
+  [100, 1100, 25]
+  ]">
+	<i class="fa fa fa-robot"></i>
+	<div>Automated Tests</div>
+</div>
+  <div class="anim_obj" data-anim-steps="[
+  [0, 1550, 20],
+  [3000, 1550, 20]
+  ]">
+	<i class="fa fa fa-user-pen"></i>
+	<div>Data Science Team</div>
+</div>
+  <div class="anim_obj" data-anim-steps="[
+  [1550, 1400, 75],
+  [100, 1250, 50],
+  [200, 1250, 50],
+  [100, 1250, 25]
+  ]">
+	<i class="fa fa fa-chart-line"></i>
+	<div>Analytics Handoff</div>
+</div>
+  <div class="anim_obj" data-anim-steps="[
+  [1550, 1400, 75],
+  [100, 1350, 50],
+  [200, 1350, 50],
+  [100, 1350, 25]
+  ]">
+	<i class="fa fa fa-table"></i>
+	<div>Pixel-Event Matrix</div>
+</div>
+  <div class="anim_obj" data-anim-steps="[
+  [1550, 1400, 75],
+  [100, 1450, 50],
+  [200, 1450, 50],
+  [100, 1450, 25]
+  ]">
+	<i class="fa fa fa-book"></i>
+	<div>Tech Knowledge Transfer</div>
+</div>
+  <div class="anim_obj" data-anim-steps="[
+  [1550, 1400, 75],
+  [100, 1550, 50],
+  [200, 1550, 50],
+  [100, 1550, 25]
+  ]">
+	<i class="fa fa fa-diagram-project"></i>
+	<div>Event Model</div>
+</div>
+</div>
+
 <div class="row grid clearfix">
 	<div class="speech col-md-10 col-xs-11
 	left fadeInLeft
 	wow" data-wow-delay="0.3s">
 		<div class="speech_bubble_content">
 			
-Let your R&amp;D team handle it and they'll have to study an entirely new and intricate domain. 
-
-			<div class="speech_bottom_border">
-			</div>
-		</div>
-	</div>
-</div>
-<br><div class="row grid clearfix">
-	<div class="speech col-md-10 col-xs-11
-	left fadeInLeft
-	wow" data-wow-delay="0.3s">
-		<div class="speech_bubble_content">
-			
-Let your marketing team handle it and you'll end up with a massive technological debt.
-
-			<div class="speech_bottom_border">
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="row grid clearfix">
-	<div class="speech col-md-10 col-xs-11
-	right fadeInRight col-md-offset-2 col-xs-offset-1
-	wow" data-wow-delay="0.3s">
-		<div class="speech_bubble_content">
-			<i>
-Are there no good alternatives?
-</i>
-			<div class="speech_bottom_border">
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="row grid clearfix">
-	<div class="speech col-md-10 col-xs-11
-	left fadeInLeft
-	wow" data-wow-delay="0.3s">
-		<div class="speech_bubble_content">
-			
-My name is Yuval Qen and I am a developer who mastered website analytics/ad-ops for the last 10 or so years. I've come up with a robust, time-tested recipe to solve this exact need.
-
-			<div class="speech_bottom_border">
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="row grid clearfix">
-	<div class="speech col-md-10 col-xs-11
-	right fadeInRight col-md-offset-2 col-xs-offset-1
-	wow" data-wow-delay="0.3s">
-		<div class="speech_bubble_content">
-			<i>
-Okay, so how does that work out for my website?
-</i>
-			<div class="speech_bottom_border">
-			</div>
-		</div>
-	</div>
-</div>
-
-
-<div class="row grid clearfix">
-	<div class="speech col-md-10 col-xs-11
-	left fadeInLeft
-	wow" data-wow-delay="0.3s">
-		<div class="speech_bubble_content">
-			
-<ul>
-<li>You get a proven solution customized for your technology stack.</li>
-  <li>Your R&amp;D team gets a well written implementation guide, automatic integration for forms/videos/click tracking, an easily maintainable, performance minded solution with built in regression testing.</li>
-  <li>Your marketing team gets a trustworthy solution with continuous visibility as to which pixels/conversions are configured.</li>
-  <li>Your data team gets a well documented event model that covers standard use cases such as Ecommerce, SaaS step-by-step funnels, attribution, data validation and ROAS reports.</li>
-</ul>
-<div class="speech_bottom_border">
-			</div>
-		</div>
-	</div>
-</div>
-
-<div class="row grid clearfix">
-	<div class="speech col-md-10 col-xs-11
-	right fadeInRight col-md-offset-2 col-xs-offset-1
-	wow" data-wow-delay="0.3s">
-		<div class="speech_bubble_content">
-			<i>
 Are you done?
-</i>
+
 			<div class="speech_bottom_border">
 			</div>
 		</div>
@@ -333,12 +444,12 @@ Are you done?
 
 <div class="row grid clearfix">
 	<div class="speech col-md-10 col-xs-11
-	left fadeInLeft
+	right fadeInRight col-md-offset-2 col-xs-offset-1
 	wow" data-wow-delay="0.3s">
 		<div class="speech_bubble_content">
-			
+			<i>
 That’s all I have, but words can only go so far.
-
+</i>
 			<div class="speech_bottom_border">
 			</div>
 		</div>
@@ -359,12 +470,12 @@ That’s all I have, but words can only go so far.
 
 <div class="row grid clearfix">
 	<div class="speech col-md-10 col-xs-11
-	right fadeInRight col-md-offset-2 col-xs-offset-1
+	left fadeInLeft
 	wow" data-wow-delay="0.3s">
 		<div class="speech_bubble_content">
-			<i>
+			
 Are you implying actions need to be taken?
-</i>
+
 			<div class="speech_bottom_border">
 			</div>
 		</div>
@@ -373,12 +484,12 @@ Are you implying actions need to be taken?
 
 <div class="row grid clearfix">
 	<div class="speech col-md-10 col-xs-11
-	left fadeInLeft
+	right fadeInRight col-md-offset-2 col-xs-offset-1
 	wow" data-wow-delay="0.3s">
 		<div class="speech_bubble_content">
-			
+			<i>
 Yes, contacting me definitely comes to mind.
-
+</i>
 			<div class="speech_bottom_border">
 			</div>
 		</div>
@@ -405,7 +516,7 @@ Yes, contacting me definitely comes to mind.
               <p class="contact_line first"><a href="mailto:hi@yuvalqen.com"><i class="fa fa-envelope"></i> hi@yuvalqen.com</a></p>
               <p class="contact_line"><a href="tel:+972-52-331-3878"><i class="fa fa-phone"></i> (+972) 523 313 878</a></p>
               <p class="contact_line"><a href="http://yuvalqen.com"><i class="fa fa-globe"></i> www.yuvalqen.com</a></p>
-              <p class="contact_line"><a href="https://www.linkedin.com/in/yuvalc/"><i class="fa fa-linkedin"></i> Yuval Qen</a></p>
+              <p class="contact_line"><a href="https://www.linkedin.com/in/yuvalc/"><i class="fa-brands fa-linkedin"></i> Yuval Qen</a></p>
 
             </div>
             <div class="left col-xs-12 col-sm-5 col-md-5">
@@ -419,12 +530,12 @@ Yes, contacting me definitely comes to mind.
 
 <div class="row grid clearfix">
 	<div class="speech col-md-10 col-xs-11
-	right fadeInRight col-md-offset-2 col-xs-offset-1
+	left fadeInLeft
 	wow" data-wow-delay="10s">
 		<div class="speech_bubble_content">
-			<i>
+			
 Website, inside a business card, inside a website? Clever.
-</i>
+
 			<div class="speech_bottom_border">
 			</div>
 		</div>
