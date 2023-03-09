@@ -44,12 +44,12 @@ div.speech div:after
 
 div.speech.left div:before {
   left: 15px;
-  border-color: #fff transparent transparent #fff;  
+  border-color: #AAA transparent transparent #AAA;  
 }
 
 div.speech.right div:before {
   right: 15px;  
-  border-color: #AAA #AAA transparent transparent;
+  border-color: #FFF #FFF transparent transparent;
 }
 
 div.speech.left div:after {
