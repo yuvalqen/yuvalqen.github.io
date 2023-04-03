@@ -10,11 +10,25 @@
 <link rel="alternate" type="application/rss+xml" title="RSS" hreflang="en" href="../rss.xml">
 <link rel="canonical" href="https://yuvalqen.com/categories/">
 <link rel="icon" href="../images/favicon.png" sizes="80x80">
-<!--[if lt IE 9]><script src="../assets/js/html5shiv-printshiv.min.js"></script><![endif]--><!-- Google Tag Manager --><script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-PLFKM99');</script><!-- End Google Tag Manager -->
+<!--[if lt IE 9]><script src="../assets/js/html5shiv-printshiv.min.js"></script><![endif]--><!-- Google Tag Manager --><script>
+    window.dataLayer = window.dataLayer || [];
+    window.preDataLayer = window.preDataLayer || [];
+    window.preDataLayer = window.preDataLayer.concat(window.dataLayer);
+    window.dataLayer = new Proxy([], { set(obj, prop, value) {
+            return Reflect.set(obj, prop, (prop != 'push') ? value : function (ev, prepushed_event) {
+                if (ev && (typeof ev.event == 'string') && ev.event.match(/gtm\.(init|init_consent|load|js|dom)/)) value.call(this, ev)
+                else if (ev && ev.event_name) value.call(this, ev)
+                else if (window.gtmx && window.gtmx.preprocess_event) return value.call(this, window.gtmx.preprocess_event(ev, prepushed_event))
+                else return window.preDataLayer.push(ev);
+            });
+        }});
+    window.dataLayer.push = window.dataLayer.push;
+
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
+            j.async=true;j.src= "https://www.googletagmanager.com/gtm.js?id="+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PLFKM99');</script><!-- End Google Tag Manager -->
 </head>
 <body>
     
