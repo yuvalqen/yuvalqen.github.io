@@ -1,0 +1,338 @@
+.. title: transaction-varna
+.. slug: transaction-varna.html
+.. date: 2022-08-09 20:47:39 UTC+03:00
+.. tags:
+.. category:
+.. link:
+.. description:
+.. type: html
+.. template: accounting-form.tmpl
+
+<style>
+  #main-form td {
+    padding: 5px;
+  }
+</style>
+
+<form id="main-form"
+  method="POST"
+  action="https://script.google.com/macros/s/AKfycbwgqMmEu8nhkiUgcWySnbsfK8x2AWSnej8Hftw7tPVpjcmhxIhmGHB4sjsPok7H_5O9/exec"
+>
+  <table>
+  {{% form_field name="Type" %}}
+  {{% form_field name="Payer" %}}
+  {{% form_field name="Payee" %}}
+  {{% form_field name="Expense" %}}
+  {{% form_field name="Asset" %}}
+  {{% form_field name="Offer" %}}
+  {{% form_field name="Amount" %}}
+  {{% form_field name="Currency" %}}
+  {{% form_field name="Payment Date" type='date' %}}
+  {{% form_field name="Period Start" type='date' %}}
+  {{% form_field name="Period End" type='date' %}}
+  {{% form_field name="Comment" %}}
+  <tr><td></td><td><button type="submit">Send</button></td></tr>
+  </table>
+</form>
+
+
+<script type="text/javascript">
+  function configureInput(input) {
+    var awesomepleteForm = new Awesomplete(input, {
+      minChars: 0,
+      maxItems: 20,
+      autoFirst: true,
+      filter: function (text, input) {
+          return (text.toLowerCase().indexOf(input.toLowerCase()) === 0) && (text.slice(0, -1).split('/').length === input.split('/').length);
+      },
+      replace: function (text) {
+          this.input.value = text;
+          console.log(this);
+          var furtherOptions = this._list.filter(function (opt) { return (opt.toLowerCase().indexOf(text.toLowerCase()) === 0) && (opt.slice(0, -1).split('/').length === text.split('/').length) });
+          if (furtherOptions.length === 1 && furtherOptions[0] != text) {
+              this.replace(furtherOptions[0]);
+          }
+          updateInputs();
+      },
+      sort: function(a, b) {
+          return a > b;
+      }});
+
+    input.addEventListener('awesomplete-selectcomplete', function (e) {
+      if (e.text.value.slice(-1) == '/') {
+        awesomepleteForm.open();
+        awesomepleteForm.evaluate();
+      }
+      // document.querySelectorAll('div.date-picker.'+input.name.split('-')[0]).forEach(function(el) {
+      //   el.style.display = e.text.value.slice(-22) == "/DD.MM.YYYY-DD.MM.YYYY" ? 'inline-block' : 'none'
+      // });
+      // document.querySelectorAll('div.date-picker').forEach(function (el) {
+      //   el.querySelector('input').required = (el.style.display == 'none') ? false : true;
+      // });
+    });
+    input.addEventListener('focus', function (e) {
+      awesomepleteForm.open();
+      awesomepleteForm.evaluate();
+    });
+
+    return awesomepleteForm;
+  }
+  function composeDimension(dimension, data) {
+    let res = {};
+    for (let i = 0; i < data.length; i++) {
+      res[data[i][dimension]] = data[i];
+    }
+    return res;
+  }
+
+  function updateRegularInput(input, display) {
+    if (display) {
+      input.closest('tr').style.display = 'table-row';
+    } else {
+      input.closest('tr').style.display = 'none';
+      input.value = '';
+    }
+  }
+
+  function updateAwesomepleInput(awesomeplete, options) {
+    let final_options = [];
+    for (let i = 0; i < options.length; i++) {
+      const option_fragments = options[i].split('/');
+      let partial_option = '';
+      for (let j = 0; j < option_fragments.length; j++) {
+        partial_option += option_fragments[j];
+        if (j < option_fragments.length - 1) {
+          partial_option += '/';
+        }
+        final_options.push(partial_option.slice());
+      }
+    }
+    options = final_options.sort().filter(function(item, pos, ary) { // Deduplicates array values
+        return !pos || item != ary[pos - 1];
+    });
+    awesomeplete.list = options;
+
+    if (options.length == 0) {
+      awesomeplete.input.closest('tr').style.display = 'none';
+      awesomeplete.input.value = '';
+    } else {
+      awesomeplete.input.closest('tr').style.display = 'table-row';
+      if (options.length == 1) {
+        awesomeplete.input.value = options[0];
+      }
+    }
+  }
+
+  function getPayeeOptions(form_values) {
+    switch (form_values.Type) {
+      case 'Ongoing':
+        return [].concat(Object.keys(investors), Object.keys(accounts));
+      case 'Offer/Contractor':
+        return Object.keys(contractors);
+      case 'Offer/General Worker':
+        return Object.keys(general_workers);
+      case 'Offer/Materials':
+        return Object.keys(shops);
+      default:
+        return [];
+    }
+  }
+  function getExpenseOptions(form_values) {
+    if (! (form_values.Payer && form_values.Payee)) {
+      return [];
+    }
+
+    switch (form_values.Type) {
+      case 'Ongoing':
+        if ((form_values.Payer in investors || form_values.Payer in accounts) && form_values.Payee in accounts) {
+          return ['Transfer'];
+        }
+        return Object.values(expenses).filter(e => !e['Offer Mandatory']).map(e => e.Expense);
+      default:
+        return [];
+    }
+  }
+  function getAssetOptions(form_values) {
+    if ((expenses[form_values.Expense] || {})['General Allowed']) {
+      return ['General'].concat(Object.keys(assets));
+    }
+    return Object.keys(assets);
+  }
+  function getOfferOptions(form_values) {
+    switch (form_values.Type) {
+      case 'Offer/Contractor':
+        return Object.values(offers).filter(e => (e['Asset'] == form_values.Asset) && (e['Contractor'] == form_values.Payee)).map(e => e.Offer);
+      case 'Offer/General Worker':
+      case 'Offer/Materials':
+        return Object.values(offers).filter(e => e['Asset'] == form_values.Asset).map(e => e.Offer);
+      default:
+        return [];
+    }
+  }
+  function displayPeriod(form_values) {
+    return expenses[form_values.Expense] && expenses[form_values.Expense]['Period based'];
+  }
+  function updateInputs() {
+    const form_values = Object.fromEntries(new FormData(document.getElementById('main-form')));
+    updateAwesomepleInput(awesomepletes.type, ['Ongoing', 'Offer/Contractor', 'Offer/General Worker', 'Offer/Materials']);
+    updateAwesomepleInput(awesomepletes.payer, [].concat(Object.keys(investors), Object.keys(accounts)));
+    updateAwesomepleInput(awesomepletes.payee, getPayeeOptions(form_values));
+    updateAwesomepleInput(awesomepletes.expense, getExpenseOptions(form_values));
+    updateAwesomepleInput(awesomepletes.assets, getAssetOptions(form_values));
+    updateAwesomepleInput(awesomepletes.offers, getOfferOptions(form_values));
+    updateRegularInput(document.getElementById("field_Period Start"), displayPeriod(form_values));
+    updateRegularInput(document.getElementById("field_Period End"), displayPeriod(form_values));
+  }
+  function initInputs() {
+    window.awesomepletes = {
+      type: configureInput(document.querySelector("#field_Type")),
+      payer: configureInput(document.querySelector("#field_Payer")),
+      payee:configureInput(document.querySelector("#field_Payee")),
+      expense: configureInput(document.querySelector("#field_Expense")),
+      assets: configureInput(document.querySelector("#field_Asset")),
+      offers: configureInput(document.querySelector("#field_Offer")),
+    };
+    updateInputs();
+  }
+
+  const main_form = document.getElementById('main-form');
+  async function getInitialData() {
+      const response = await fetch(main_form.action + '?method=getInitialData');
+      const payload = await response.json();
+      if (payload.result != 'success') {
+        throw new Error('Failed to fetch initial data');
+      }
+      window.raw_data = payload.data;
+  }
+
+  window.addEventListener("load", function() {
+    getInitialData().then(() => {
+      window.expenses = composeDimension('Expense', raw_data['expenses']);
+      window.investors = composeDimension('Entity', raw_data['entities'].filter(e => e.Investor));
+      window.contractors = composeDimension('Entity', raw_data['entities'].filter(e => e.Contractor));
+      window.accounts = composeDimension('Entity', raw_data['entities'].filter(e => e.Account));
+      window.general_workers = composeDimension('Entity', raw_data['entities'].filter(e => e['General Worker']));
+      window.supervisors = composeDimension('Entity', raw_data['entities'].filter(e => e['Supervisor']));
+      window.shops = composeDimension('Entity', raw_data['entities'].filter(e => e.Shop));
+      window.assets = composeDimension('Asset', raw_data['assets']);
+      window.offers = composeDimension('Asset', raw_data['offers']);
+      initInputs();
+    });
+  });
+</script>
+
+
+<!--<form id="transaction-form" autocomplete="off">-->
+<!--<table>-->
+<!--<tbody>-->
+<!--<tr>-->
+<!--<td align="left">Payer:</td>-->
+<!--<td align="left">-->
+<!--  <input tabindex="20" style="width: 100%;" name="payer" type="text" required autocomplete="off"/>-->
+<!--  <div class="date-picker payer">-->
+<!--    <label>Start Date</label><input tabindex="21" name="payer_startDate" type="date" onchange="updateDates(this)" required/>-->
+<!--  </div>-->
+<!--  <div class="date-picker payer">-->
+<!--    <label>End Date</label><input tabindex="22" name="payer_endDate" type="date" onchange="updateDates(this)" required/>-->
+<!--  </div>-->
+<!--</td>-->
+<!--</tr>-->
+<!--<tr>-->
+<!--<td align="left">Beneficiary:</td>-->
+<!--<td align="left"><input tabindex="50" style="width: 100%;" name="beneficiary" type="text" required autocomplete="off"/>-->
+<!--  <div class="date-picker beneficiary">-->
+<!--    <label>Start Date</label><input tabindex="51" name="beneficiary_startDate" type="date" onchange="updateDates(this)"/>-->
+<!--  </div>-->
+<!--  <div class="date-picker beneficiary">-->
+<!--    <label>End Date</label><input tabindex="52" name="beneficiary_endDate" type="date" onchange="updateDates(this)"/>-->
+<!--  </div>-->
+<!--</td>-->
+<!--</tr>-->
+<!--<tr>-->
+<!--<td align="center"><input tabindex="60" value="Next" type="submit" /></td>-->
+<!--<td style="width: 100%;"></td>-->
+<!--</tr>-->
+<!--</tbody>-->
+<!--</table>-->
+<!--</form>-->
+<!--<script>-->
+<!--function submitForm(e) {-->
+<!--  e.preventDefault();-->
+<!--  var payer = document.querySelector("form#transaction-form input[name^='payer-']").value;-->
+<!--  var beneficiary = document.querySelector("form#transaction-form input[name^='beneficiary-']").value;-->
+<!--  document.location = "https://docs.google.com/forms/d/e/1FAIpQLSesG5bE453SQ7-qyhtPW9PN6JQdPPdbeHBiWvm4VaQ15X_NVg/viewform?usp=pp_url&entry.771416493="+payer+"&entry.1622998056="+beneficiary;-->
+<!--}-->
+
+<!--function updateDates(input) {-->
+<!--  regexToReplace = {-->
+<!--    startDate: /[D0-9]{2}\.[M0-9]{2}\.[Y0-9]{4}-/i,-->
+<!--    endDate: /-[D0-9]{2}\.[M0-9]{2}\.[Y0-9]{4}/i-->
+<!--  };-->
+<!--  if (input.value.length > 10 || input.value.length == 0) { return; }-->
+<!--  var associatedInputName = input.name.split('-')[0].split('_')[0];-->
+<!--  var startDateOrEndDate = input.name.split('-')[0].split('_')[1];-->
+<!--  var dateString = (startDateOrEndDate == "endDate" ? "-" : "") + input.value.split('-').reverse().join('.') + (startDateOrEndDate == "startDate" ? "-" : "");-->
+<!--  var associatedInput = document.querySelectorAll("input[name^='"+ associatedInputName +"-']")[0];-->
+<!--  associatedInput.value = associatedInput.value.replace(regexToReplace[startDateOrEndDate], dateString);-->
+<!--}-->
+<!--function cartesian() {-->
+<!--    var r = [], arg = arguments, max = arg.length-1;-->
+<!--    function helper(arr, i) {-->
+<!--        for (var j=0, l=arg[i].length; j<l; j++) {-->
+<!--            var a = arr.slice(0); // clone arr-->
+<!--            a.push(arg[i][j]);-->
+<!--            if (i==max)-->
+<!--                r.push(a);-->
+<!--            else-->
+<!--                helper(a, i+1);-->
+<!--        }-->
+<!--    }-->
+<!--    helper([], 0);-->
+<!--    return r.map(function(e) {return (e.join('').slice(0, -1).indexOf('//') >=0) ? "" : e.join('').replace('//', '/')}).filter(function (e) { return e.length > 0 });-->
+<!--}-->
+<!--var config = {-->
+<!--  bills: ["Common Cost", "Electricity", "Gas", "Internet", "Management Fee", "Water", "Insurance", "Banking Fees", "Security", "Accounting", "Tax/Social Securities", "Tax/Property Tax", "Tax/VAT", "Tax/VAT-Refund"],-->
+<!--  landlords: ["Holistic Solutions"],-->
+<!--  expenses: ["Marketing", "Debt Write Off",-->
+<!--             "Maintenance/", "Maintenance/Cleaning", "Maintenance/Gardening", "Maintenance/Swimming Pool", "Maintenance/Travel Costs", "Maintenance/Equipment", "Maintenance/Black Materials", "Maintenance/Furnitures", "Maintenance/Appliances", "Maintenance/Garbage Disposal",-->
+<!--             "Legal Fees",-->
+<!--             "Tax/", "Tax/Profit Tax", "Tax/Purchase Tax", "Tax/Tourist Tax",-->
+<!--             "Renovation/", "Renovation/Management", "Renovation/Construction Labor", "Renovation/Worker Accomodations", "Renovation/Worker Personal Expenses", "Renovation/Electrician", "Renovation/Plumber", "Renovation/White Materials", "Renovation/Black Materials", "Renovation/Furnitures", "Renovation/Appliances", "Renovation/Accessories", "Renovation/Travel Costs", "Renovation/Assembly Labor", "Renovation/Cleaning Labor", "Renovation/Waste Disposal", "Renovation/Static Engineer", "Renovation/Utility Company Fees", "Renovation/Tools",-->
+<!--             "Administration", "Purchase Cost", "Grants"],-->
+<!--  employees: ["Amit", "Denitsa", "Joseph", "Yuval", "Rositsa", "Paysera", "Safe"],-->
+<!--  assets: ["Sofia 7", "Pchelnik House", "Tundja 3", "General", "Pchelnik Ogosta", "Krivini House", "Plot Balam Dere Varna", "Pchelnik Vineyard 021038"],-->
+<!--  tenant: ["Tenant"],-->
+<!--  title: "Varna Transaction Submission Form"-->
+<!--}-->
+<!--var payerOptions = [].concat.apply([], [-->
+<!--  cartesian(['Hospitality'], '/'),-->
+<!--  cartesian(['Hospitality'], '/', config['assets'], '/'),-->
+<!--  cartesian(['Hospitality'], '/', config['assets'], '/', ["DD.MM.YYYY-DD.MM.YYYY"]),-->
+<!--  cartesian(config["tenant"], '/'),-->
+<!--  cartesian(config["tenant"], '/', ['Deposit', 'Bills', 'Rent'], '/'),-->
+<!--  cartesian(config["tenant"], '/', ['Deposit'], '/', config['assets']),-->
+<!--  cartesian(config["tenant"], '/', ['Bills', 'Rent'], '/', config['assets'], '/'),-->
+<!--  cartesian(config["tenant"], '/', ['Bills', 'Rent'], '/', config['assets'], '/', ["DD.MM.YYYY-DD.MM.YYYY"]),-->
+<!--  config['landlords'],-->
+<!--  config['employees']-->
+<!--]);-->
+<!--var beneficiaryOptions = [].concat.apply([], [-->
+<!--  cartesian(config['bills'], '/'),-->
+<!--  cartesian(config['bills'], '/', config['assets'], '/'),-->
+<!--  cartesian(config['bills'], '/', config['assets'], '/', ["DD.MM.YYYY-DD.MM.YYYY"]),-->
+<!--  cartesian(config['expenses'], '/'),-->
+<!--  cartesian(config['expenses'], '/', config['assets']),-->
+<!--  cartesian(config["tenant"], '/'),-->
+<!--  cartesian(config["tenant"], '/', ['Deposit'], '/'),-->
+<!--  cartesian(config["tenant"], '/', ['Deposit'], '/', config['assets']),-->
+<!--  config['landlords'],-->
+<!--  config['employees']-->
+<!--]);-->
+<!--var salt = Math.floor(Math.random()*10000000);-->
+<!--document.querySelectorAll("form#transaction-form input").forEach(function (el) {-->
+<!--      el.name = el.name + '-' + salt;-->
+<!--    });-->
+<!--configureInput(document.querySelector("form#transaction-form input[name^='payer-']"), payerOptions);-->
+<!--configureInput(document.querySelector("form#transaction-form input[name^='beneficiary-']"), beneficiaryOptions);-->
+<!--document.querySelector("form#transaction-form").addEventListener('submit', submitForm);-->
+<!--</script>-->
