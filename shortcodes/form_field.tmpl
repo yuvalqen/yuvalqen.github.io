@@ -3,6 +3,20 @@
         <label for="field_${name}"">${name}</label>
     </td>
     <td>
-        <input id="field_${name}" name="${name}" placeholder="${name}" ${'type="date" onchange="updateDates(this)"' if type == 'date' else 'type="text"'} />
+    % if type == 'input':
+        <input id="field_${name}" name="${name}" placeholder="${name}" type="text" />
+    % elif type == 'date':
+        <input id="field_${name}" name="${name}" placeholder="${name}" type="date" onchange="updateDates(this)" onfocus="this.showPicker()" />
+    % elif type == 'select':
+        <select id="field_${name}" name="${name}">
+            % for option in options.split(','):
+                <option value="${option}">${option}</option>
+            % endfor
+        </select>
+    % elif type == 'textarea':
+        <textarea id="field_${name}" name="${name}" placeholder="${name}"></textarea>
+    % elif type == 'number':
+        <input id="field_${name}" name="${name}" placeholder="${name}" type="number" />
+    % endif
     </td>
 </tr>

@@ -8,10 +8,14 @@
 .. type: html
 .. template: accounting-form.tmpl
 
+
 <style>
   #main-form td {
     padding: 5px;
   }
+  input.empty { background-color: white; }
+  input.valid { background-color: rgba(0, 162, 80, 0.2); }
+  input.invalid { background-color: rgba(163, 13, 13, 0.2); }
 </style>
 
 <form id="main-form"
@@ -19,18 +23,20 @@
   action="https://script.google.com/macros/s/AKfycbwgqMmEu8nhkiUgcWySnbsfK8x2AWSnej8Hftw7tPVpjcmhxIhmGHB4sjsPok7H_5O9/exec"
 >
   <table>
-  {{% form_field name="Type" %}}
-  {{% form_field name="Payer" %}}
-  {{% form_field name="Payee" %}}
-  {{% form_field name="Expense" %}}
-  {{% form_field name="Asset" %}}
-  {{% form_field name="Offer" %}}
-  {{% form_field name="Amount" %}}
-  {{% form_field name="Currency" %}}
-  {{% form_field name="Payment Date" type='date' %}}
+  {{% form_field name="Payer" type='input' %}}
+  {{% form_field name="Type" type='input' %}}
+
+  {{% form_field name="Asset" type='input' %}}
+  {{% form_field name="Payee" type='input' %}}
+  {{% form_field name="Expense" type='input' %}}
   {{% form_field name="Period Start" type='date' %}}
   {{% form_field name="Period End" type='date' %}}
-  {{% form_field name="Comment" %}}
+  {{% form_field name="Offer" type='input' %}}
+
+  {{% form_field name="Amount" type='number' %}}
+  {{% form_field name="Currency" type='select' options='EUR,BGN' %}}
+  {{% form_field name="Payment Date" type='date' %}}
+  {{% form_field name="Comment" type='textarea' %}}
   <tr><td></td><td><button type="submit">Send</button></td></tr>
   </table>
 </form>
@@ -74,6 +80,9 @@
       awesomepleteForm.open();
       awesomepleteForm.evaluate();
     });
+    input.addEventListener('blur', function (e) {
+      updateInputs();
+    });
 
     return awesomepleteForm;
   }
@@ -108,80 +117,85 @@
       }
     }
     options = final_options.sort().filter(function(item, pos, ary) { // Deduplicates array values
-        return !pos || item != ary[pos - 1];
+        return !pos || item !== ary[pos - 1];
     });
     awesomeplete.list = options;
 
-    if (options.length == 0) {
+    if (options.length === 0) {
       awesomeplete.input.closest('tr').style.display = 'none';
       awesomeplete.input.value = '';
     } else {
       awesomeplete.input.closest('tr').style.display = 'table-row';
-      if (options.length == 1) {
+      if (options.length === 1 && awesomeplete.input.value === '') {
         awesomeplete.input.value = options[0];
+      }
+      awesomeplete.input.classList.remove('empty', 'invalid', 'valid');
+      if (awesomeplete.input.value === '') {
+        awesomeplete.input.classList.add('empty')
+      } else if (options.indexOf(awesomeplete.input.value) >= 0) {
+        awesomeplete.input.classList.add('valid')
+      } else {
+        awesomeplete.input.classList.add('invalid')
       }
     }
   }
 
-  function getPayeeOptions(form_values) {
+  function getPayeeOptions() {
+    const form_values = Object.fromEntries(new FormData(document.getElementById('main-form')));
+    let res = [];
     switch (form_values.Type) {
-      case 'Ongoing':
-        return [].concat(Object.keys(investors), Object.keys(accounts));
-      case 'Offer/Contractor':
-        return Object.keys(contractors);
-      case 'Offer/General Worker':
-        return Object.keys(general_workers);
-      case 'Offer/Materials':
-        return Object.keys(shops);
-      default:
-        return [];
+      case 'Transfer': res = Object.keys(accounts); break;
+      case 'Service': res = Object.keys(entities).filter(e => entities[e].Type !== 'Vendor'); break;
+      case 'Offer': res = []; break;
+      case 'Materials': res = Object.keys(entities).filter(e => entities[e].Type === 'Vendor'); break;
+      case 'Lump Sum': res = []; break;
     }
+    return res.filter(e => e !== form_values.Payer);
   }
-  function getExpenseOptions(form_values) {
-    if (! (form_values.Payer && form_values.Payee)) {
+
+  function getExpenseOptions() {
+    const form_values = Object.fromEntries(new FormData(document.getElementById('main-form')));
+    if (form_values.Payee === '' || form_values.Type !== 'Service') {
       return [];
     }
 
+    return Object.values(expenses)
+            .filter(e => e['Entity Type'].split(',').indexOf(entities[form_values.Payee].Type) >= 0)
+            .filter(e => !e['Offer Mandatory'])
+            .filter(e => form_values.Asset !== 'General' || e['General Allowed'])
+            .map(e => e.Expense) || [''];
+  }
+
+  function getAssetOptions() {
+    const form_values = Object.fromEntries(new FormData(document.getElementById('main-form')));
+    if (form_values.Type === 'Transfer' || form_values.Type === '') {
+      return [];
+    }
+    return ['General'].concat(Object.keys(assets));
+  }
+
+  function getOfferOptions() {
+    const form_values = Object.fromEntries(new FormData(document.getElementById('main-form')));
     switch (form_values.Type) {
-      case 'Ongoing':
-        if ((form_values.Payer in investors || form_values.Payer in accounts) && form_values.Payee in accounts) {
-          return ['Transfer'];
-        }
-        return Object.values(expenses).filter(e => !e['Offer Mandatory']).map(e => e.Expense);
+      case 'Offer':
+        return Object.values(offers).filter(e => (e['Asset'] == form_values.Asset)).map(e => e.Offer);
       default:
         return [];
     }
   }
-  function getAssetOptions(form_values) {
-    if ((expenses[form_values.Expense] || {})['General Allowed']) {
-      return ['General'].concat(Object.keys(assets));
-    }
-    return Object.keys(assets);
-  }
-  function getOfferOptions(form_values) {
-    switch (form_values.Type) {
-      case 'Offer/Contractor':
-        return Object.values(offers).filter(e => (e['Asset'] == form_values.Asset) && (e['Contractor'] == form_values.Payee)).map(e => e.Offer);
-      case 'Offer/General Worker':
-      case 'Offer/Materials':
-        return Object.values(offers).filter(e => e['Asset'] == form_values.Asset).map(e => e.Offer);
-      default:
-        return [];
-    }
-  }
-  function displayPeriod(form_values) {
-    return expenses[form_values.Expense] && expenses[form_values.Expense]['Period based'];
+  function displayPeriod() {
+    const form_values = Object.fromEntries(new FormData(document.getElementById('main-form')));
+    return form_values.Type === 'Lump Sum' || expenses[form_values.Expense] && expenses[form_values.Expense]['Period based'];
   }
   function updateInputs() {
-    const form_values = Object.fromEntries(new FormData(document.getElementById('main-form')));
-    updateAwesomepleInput(awesomepletes.type, ['Ongoing', 'Offer/Contractor', 'Offer/General Worker', 'Offer/Materials']);
-    updateAwesomepleInput(awesomepletes.payer, [].concat(Object.keys(investors), Object.keys(accounts)));
-    updateAwesomepleInput(awesomepletes.payee, getPayeeOptions(form_values));
-    updateAwesomepleInput(awesomepletes.expense, getExpenseOptions(form_values));
-    updateAwesomepleInput(awesomepletes.assets, getAssetOptions(form_values));
-    updateAwesomepleInput(awesomepletes.offers, getOfferOptions(form_values));
-    updateRegularInput(document.getElementById("field_Period Start"), displayPeriod(form_values));
-    updateRegularInput(document.getElementById("field_Period End"), displayPeriod(form_values));
+    updateAwesomepleInput(awesomepletes.payer, Object.keys(accounts));
+    updateAwesomepleInput(awesomepletes.type, ['Service', 'Offer', 'Materials', 'Transfer', 'Lump Sum']);
+    updateAwesomepleInput(awesomepletes.assets, getAssetOptions());
+    updateAwesomepleInput(awesomepletes.payee, getPayeeOptions());
+    updateAwesomepleInput(awesomepletes.offers, getOfferOptions());
+    updateAwesomepleInput(awesomepletes.expense, getExpenseOptions());
+    updateRegularInput(document.getElementById("field_Period Start"), displayPeriod());
+    updateRegularInput(document.getElementById("field_Period End"), displayPeriod());
   }
   function initInputs() {
     window.awesomepletes = {
@@ -193,6 +207,22 @@
       offers: configureInput(document.querySelector("#field_Offer")),
     };
     updateInputs();
+  }
+
+  function updateDates(el) {
+      const form_values = Object.fromEntries(new FormData(document.getElementById('main-form')));
+
+      const payment_date_input = document.getElementById('field_Payment Date');
+      payment_date_input.classList.remove('empty', 'invalid', 'valid');
+      payment_date_input.classList.add(form_values['Payment_Date'] === '' ? 'empty' : new Date(form_values['Payment Date']) < Date.now() ? 'valid': 'invalid');
+      const period_start_input = document.getElementById('field_Period Start');
+      const period_end_input = document.getElementById('field_Period End');
+      period_start_input.classList.remove('empty', 'invalid', 'valid');
+      period_end_input.classList.remove('empty', 'invalid', 'valid');
+      const period_validity = form_values['Period Start'] === '' || form_values['Period End'] === '' ? 'empty' :
+              new Date(form_values['Period Start']) <= new Date(form_values['Period End']) ? 'valid': 'invalid';
+      period_start_input.classList.add(period_validity);
+      period_end_input.classList.add(period_validity);
   }
 
   const main_form = document.getElementById('main-form');
@@ -208,14 +238,10 @@
   window.addEventListener("load", function() {
     getInitialData().then(() => {
       window.expenses = composeDimension('Expense', raw_data['expenses']);
-      window.investors = composeDimension('Entity', raw_data['entities'].filter(e => e.Investor));
-      window.contractors = composeDimension('Entity', raw_data['entities'].filter(e => e.Contractor));
-      window.accounts = composeDimension('Entity', raw_data['entities'].filter(e => e.Account));
-      window.general_workers = composeDimension('Entity', raw_data['entities'].filter(e => e['General Worker']));
-      window.supervisors = composeDimension('Entity', raw_data['entities'].filter(e => e['Supervisor']));
-      window.shops = composeDimension('Entity', raw_data['entities'].filter(e => e.Shop));
       window.assets = composeDimension('Asset', raw_data['assets']);
-      window.offers = composeDimension('Asset', raw_data['offers']);
+      window.offers = composeDimension('Offer', raw_data['offers']);
+      window.entities = composeDimension('Entity', raw_data['entities']);
+      window.accounts = composeDimension('Entity', raw_data['entities'].filter(e => e.Account));
       initInputs();
     });
   });
