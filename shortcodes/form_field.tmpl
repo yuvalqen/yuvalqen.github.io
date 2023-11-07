@@ -1,10 +1,19 @@
-<tr>
+<tr${' class="hidden-row"' if index and int(index) > 1 else ''}>
     <td>
         <label for="field_${name}"">${name}</label>
     </td>
     <td>
     % if type == 'input':
-        <input id="field_${name}" name="${name}" placeholder="${name}" type="text" />
+        % if index:
+            <input id="field_${name}_${index}" name="${name}_${index}" placeholder="${name} ${index}" type="text" />
+            </td><td>
+            <input id="field_${name}_${index}_perc" class="expense-perc" name="${name}_${index}_perc" type="number" step=10 value="${100 if int(index) == 1 else 0}" />%
+            % if int(index) > 1:
+                </td><td><button class="btn btn-default add-remove-btn remove-expense" data-index=${index}></button>
+            % endif
+        % else:
+            <input id="field_${name}" name="${name}" placeholder="${name}" type="text" />
+        % endif
     % elif type == 'date':
         <input id="field_${name}" name="${name}" placeholder="${name}" type="date" onchange="updateDates(this)" onfocus="this.showPicker()" />
     % elif type == 'select':
