@@ -14,21 +14,38 @@
 <body style="margin: 20px;">
 
 <style>
+  body {
+    font-size: 2em;
+  }
   #main-form td {
     padding: 5px;
   }
+  #main-form input, #main-form div.awesomplete, #main-form button[type='submit'] {
+    width: 100%;
+  }
+
   input.empty { background-color: white; }
   input.valid { background-color: rgba(0, 162, 80, 0.2); }
   input.invalid { background-color: rgba(163, 13, 13, 0.2); }
+
+  input.expense-perc { width: 50px; }
+
+  tr.no-options { display: none; }
+  tr.hidden-row { display: none; }
+
+  button.add-remove-btn {}
+  button.add-expense:before { content: '+'; }
+  button.remove-expense:before { content: '-'; }
 </style>
-<form id="main-form" method="POST" action="https://script.google.com/macros/s/AKfycbwgqMmEu8nhkiUgcWySnbsfK8x2AWSnej8Hftw7tPVpjcmhxIhmGHB4sjsPok7H_5O9/exec">
+<p id="loader">Loading...</p>
+<form id="main-form" method="POST" action="https://script.google.com/macros/s/AKfycbwgqMmEu8nhkiUgcWySnbsfK8x2AWSnej8Hftw7tPVpjcmhxIhmGHB4sjsPok7H_5O9/exec" style="display:none;">
   <table>
 <tr>
 <td>
         <label for="field_Payer">Payer</label>
     </td>
     <td>
-        <input id="field_Payer" name="Payer" placeholder="Payer" type="text">
+            <input id="field_Payer" name="Payer" placeholder="Payer" type="text">
 </td>
 </tr>
 <tr>
@@ -36,7 +53,7 @@
         <label for="field_Type">Type</label>
     </td>
     <td>
-        <input id="field_Type" name="Type" placeholder="Type" type="text">
+            <input id="field_Type" name="Type" placeholder="Type" type="text">
 </td>
 </tr>
 <tr>
@@ -44,7 +61,7 @@
         <label for="field_Asset">Asset</label>
     </td>
     <td>
-        <input id="field_Asset" name="Asset" placeholder="Asset" type="text">
+            <input id="field_Asset" name="Asset" placeholder="Asset" type="text">
 </td>
 </tr>
 <tr>
@@ -52,7 +69,7 @@
         <label for="field_Payee">Payee</label>
     </td>
     <td>
-        <input id="field_Payee" name="Payee" placeholder="Payee" type="text">
+            <input id="field_Payee" name="Payee" placeholder="Payee" type="text">
 </td>
 </tr>
 <tr>
@@ -60,8 +77,79 @@
         <label for="field_Expense">Expense</label>
     </td>
     <td>
-        <input id="field_Expense" name="Expense" placeholder="Expense" type="text">
+            <input id="field_Expense" name="Expense" placeholder="Expense" type="text">
 </td>
+</tr>
+<tr>
+<td>
+        <label for="field_Expense">Expense</label>
+    </td>
+    <td>
+            <input id="field_Expense_1" name="Expense_1" placeholder="Expense 1" type="text">
+</td>
+<td>
+            <input id="field_Expense_1_perc" class="expense-perc" name="Expense_1_perc" type="number" step="10" value="100">%
+    </td>
+</tr>
+<tr class="hidden-row">
+<td>
+        <label for="field_Expense">Expense</label>
+    </td>
+    <td>
+            <input id="field_Expense_2" name="Expense_2" placeholder="Expense 2" type="text">
+</td>
+<td>
+            <input id="field_Expense_2_perc" class="expense-perc" name="Expense_2_perc" type="number" step="10" value="0">%
+                </td>
+<td>
+<button class="btn btn-default add-remove-btn remove-expense" data-index="2"></button>
+    </td>
+</tr>
+<tr class="hidden-row">
+<td>
+        <label for="field_Expense">Expense</label>
+    </td>
+    <td>
+            <input id="field_Expense_3" name="Expense_3" placeholder="Expense 3" type="text">
+</td>
+<td>
+            <input id="field_Expense_3_perc" class="expense-perc" name="Expense_3_perc" type="number" step="10" value="0">%
+                </td>
+<td>
+<button class="btn btn-default add-remove-btn remove-expense" data-index="3"></button>
+    </td>
+</tr>
+<tr class="hidden-row">
+<td>
+        <label for="field_Expense">Expense</label>
+    </td>
+    <td>
+            <input id="field_Expense_4" name="Expense_4" placeholder="Expense 4" type="text">
+</td>
+<td>
+            <input id="field_Expense_4_perc" class="expense-perc" name="Expense_4_perc" type="number" step="10" value="0">%
+                </td>
+<td>
+<button class="btn btn-default add-remove-btn remove-expense" data-index="4"></button>
+    </td>
+</tr>
+<tr class="hidden-row">
+<td>
+        <label for="field_Expense">Expense</label>
+    </td>
+    <td>
+            <input id="field_Expense_5" name="Expense_5" placeholder="Expense 5" type="text">
+</td>
+<td>
+            <input id="field_Expense_5_perc" class="expense-perc" name="Expense_5_perc" type="number" step="10" value="0">%
+                </td>
+<td>
+<button class="btn btn-default add-remove-btn remove-expense" data-index="5"></button>
+    </td>
+</tr>
+<tr>
+<td></td>
+<td><button class="btn btn-default expense-btn add-expense"></button></td>
 </tr>
 <tr>
 <td>
@@ -84,7 +172,7 @@
         <label for="field_Offer">Offer</label>
     </td>
     <td>
-        <input id="field_Offer" name="Offer" placeholder="Offer" type="text">
+            <input id="field_Offer" name="Offer" placeholder="Offer" type="text">
 </td>
 </tr>
 <tr>
@@ -132,7 +220,7 @@
   function configureInput(input) {
     var awesomepleteForm = new Awesomplete(input, {
       minChars: 0,
-      maxItems: 20,
+      maxItems: 10,
       autoFirst: true,
       filter: function (text, input) {
           return (text.toLowerCase().indexOf(input.toLowerCase()) === 0) && (text.slice(0, -1).split('/').length === input.split('/').length);
@@ -155,12 +243,6 @@
         awesomepleteForm.open();
         awesomepleteForm.evaluate();
       }
-      // document.querySelectorAll('div.date-picker.'+input.name.split('-')[0]).forEach(function(el) {
-      //   el.style.display = e.text.value.slice(-22) == "/DD.MM.YYYY-DD.MM.YYYY" ? 'inline-block' : 'none'
-      // });
-      // document.querySelectorAll('div.date-picker').forEach(function (el) {
-      //   el.querySelector('input').required = (el.style.display == 'none') ? false : true;
-      // });
     });
     input.addEventListener('focus', function (e) {
       awesomepleteForm.open();
@@ -182,9 +264,9 @@
 
   function updateRegularInput(input, display) {
     if (display) {
-      input.closest('tr').style.display = 'table-row';
+      input.closest('tr').classList.remove('no-options');
     } else {
-      input.closest('tr').style.display = 'none';
+      input.closest('tr').classList.add('no-options');
       input.value = '';
     }
   }
@@ -208,10 +290,10 @@
     awesomeplete.list = options;
 
     if (options.length === 0) {
-      awesomeplete.input.closest('tr').style.display = 'none';
+      awesomeplete.input.closest('tr').classList.add('no-options');
       awesomeplete.input.value = '';
     } else {
-      awesomeplete.input.closest('tr').style.display = 'table-row';
+      awesomeplete.input.closest('tr').classList.remove('no-options');
       if (options.length === 1 && awesomeplete.input.value === '') {
         awesomeplete.input.value = options[0];
       }
@@ -231,7 +313,7 @@
     let res = [];
     switch (form_values.Type) {
       case 'Transfer': res = Object.keys(accounts); break;
-      case 'Service': res = Object.keys(entities).filter(e => entities[e].Type !== 'Vendor'); break;
+      case 'Service': res = Object.keys(entities).filter(e => ['Vendor', 'Investor', ''].indexOf(entities[e].Type) === -1 ); break;
       case 'Offer': res = []; break;
       case 'Materials': res = Object.keys(entities).filter(e => entities[e].Type === 'Vendor'); break;
       case 'Lump Sum': res = []; break;
@@ -239,9 +321,9 @@
     return res.filter(e => e !== form_values.Payer);
   }
 
-  function getExpenseOptions() {
+  function getExpenseOptions(multiple_expenses) {
     const form_values = Object.fromEntries(new FormData(document.getElementById('main-form')));
-    if (form_values.Payee === '' || form_values.Type !== 'Service') {
+    if (form_values.Payee === '' || form_values.Type !== (multiple_expenses ? 'Materials' : 'Service')) {
       return [];
     }
 
@@ -279,7 +361,16 @@
     updateAwesomepleInput(awesomepletes.assets, getAssetOptions());
     updateAwesomepleInput(awesomepletes.payee, getPayeeOptions());
     updateAwesomepleInput(awesomepletes.offers, getOfferOptions());
-    updateAwesomepleInput(awesomepletes.expense, getExpenseOptions());
+    updateAwesomepleInput(awesomepletes.expense, getExpenseOptions(false));
+    let multiple_options = getExpenseOptions(true);
+    for (let i = 0; i < awesomepletes.multiple_expenses.length; i++) {
+      updateAwesomepleInput(awesomepletes.multiple_expenses[i], multiple_options);
+    }
+    if (multiple_options.length > 0) {
+      document.querySelector('button.add-expense').closest('tr').classList.remove('no-options');
+    } else {
+      document.querySelector('button.add-expense').closest('tr').classList.add('no-options');
+    }
     updateRegularInput(document.getElementById("field_Period Start"), displayPeriod());
     updateRegularInput(document.getElementById("field_Period End"), displayPeriod());
   }
@@ -289,10 +380,19 @@
       payer: configureInput(document.querySelector("#field_Payer")),
       payee:configureInput(document.querySelector("#field_Payee")),
       expense: configureInput(document.querySelector("#field_Expense")),
+      multiple_expenses: [
+        configureInput(document.querySelector("#field_Expense_1")),
+        configureInput(document.querySelector("#field_Expense_2")),
+        configureInput(document.querySelector("#field_Expense_3")),
+        configureInput(document.querySelector("#field_Expense_4")),
+        configureInput(document.querySelector("#field_Expense_5")),
+      ],
       assets: configureInput(document.querySelector("#field_Asset")),
       offers: configureInput(document.querySelector("#field_Offer")),
     };
     updateInputs();
+    document.querySelector('#main-form').style.display = 'block';
+    document.querySelector('#loader').style.display = 'none';
   }
 
   function updateDates(el) {
@@ -330,7 +430,47 @@
       window.accounts = composeDimension('Entity', raw_data['entities'].filter(e => e.Account));
       initInputs();
     });
+
+    document.querySelectorAll('button.remove-expense').forEach(el => el.addEventListener('click', function (ev) {
+      ev.preventDefault();
+      let input = document.querySelector('#field_Expense_' + ev.target.getAttribute('data-index'));
+      input.value = '';
+      input.closest('tr').classList.add('hidden-row');
+      document.querySelector('button.add-expense').removeAttribute('disabled');
+    }));
+
+    document.querySelector('button.add-expense').addEventListener('click', function (ev) {
+      ev.preventDefault();
+      let input = document.querySelector('tr.hidden-row [id^="field_Expense_"]')
+      input.closest('tr').classList.remove('hidden-row');
+      if (!document.querySelector('tr.hidden-row [id^="field_Expense_"]')) {
+        document.querySelector('button.add-expense').setAttribute('disabled', '');
+      }
+    });
+
+    document.querySelectorAll('input.expense-perc').forEach(el => el.addEventListener('change', function (ev) {
+        ev.preventDefault();
+        let sum_perc = 0;
+        document.querySelectorAll('input.expense-perc').forEach(el => {
+            let perc = parseFloat(el.value);
+            sum_perc += perc;
+        });
+        document.querySelectorAll('input.expense-perc').forEach(el => {
+          el.classList.remove('empty', 'invalid', 'valid');
+          if (sum_perc !== 100) {
+            el.classList.add('invalid');
+          } else {
+            el.classList.add('valid');
+          }
+        });
+    }));
+
+    document.querySelectorAll('textarea').forEach(el => el.addEventListener('keyup', function (ev) {
+      ev.target.style.height = "1px";
+      ev.target.style.height = (25+ev.target.scrollHeight)+"px";
+    }));
   });
-</script><!--<form id="transaction-form" autocomplete="off">--><!--<table>--><!--<tbody>--><!--<tr>--><!--<td align="left">Payer:</td>--><!--<td align="left">--><!--  <input tabindex="20" style="width: 100%;" name="payer" type="text" required autocomplete="off"/>--><!--  <div class="date-picker payer">--><!--    <label>Start Date</label><input tabindex="21" name="payer_startDate" type="date" onchange="updateDates(this)" required/>--><!--  </div>--><!--  <div class="date-picker payer">--><!--    <label>End Date</label><input tabindex="22" name="payer_endDate" type="date" onchange="updateDates(this)" required/>--><!--  </div>--><!--</td>--><!--</tr>--><!--<tr>--><!--<td align="left">Beneficiary:</td>--><!--<td align="left"><input tabindex="50" style="width: 100%;" name="beneficiary" type="text" required autocomplete="off"/>--><!--  <div class="date-picker beneficiary">--><!--    <label>Start Date</label><input tabindex="51" name="beneficiary_startDate" type="date" onchange="updateDates(this)"/>--><!--  </div>--><!--  <div class="date-picker beneficiary">--><!--    <label>End Date</label><input tabindex="52" name="beneficiary_endDate" type="date" onchange="updateDates(this)"/>--><!--  </div>--><!--</td>--><!--</tr>--><!--<tr>--><!--<td align="center"><input tabindex="60" value="Next" type="submit" /></td>--><!--<td style="width: 100%;"></td>--><!--</tr>--><!--</tbody>--><!--</table>--><!--</form>--><!--<script>--><!--function submitForm(e) {--><!--  e.preventDefault();--><!--  var payer = document.querySelector("form#transaction-form input[name^='payer-']").value;--><!--  var beneficiary = document.querySelector("form#transaction-form input[name^='beneficiary-']").value;--><!--  document.location = "https://docs.google.com/forms/d/e/1FAIpQLSesG5bE453SQ7-qyhtPW9PN6JQdPPdbeHBiWvm4VaQ15X_NVg/viewform?usp=pp_url&entry.771416493="+payer+"&entry.1622998056="+beneficiary;--><!--}--><!--function updateDates(input) {--><!--  regexToReplace = {--><!--    startDate: /[D0-9]{2}\.[M0-9]{2}\.[Y0-9]{4}-/i,--><!--    endDate: /-[D0-9]{2}\.[M0-9]{2}\.[Y0-9]{4}/i--><!--  };--><!--  if (input.value.length > 10 || input.value.length == 0) { return; }--><!--  var associatedInputName = input.name.split('-')[0].split('_')[0];--><!--  var startDateOrEndDate = input.name.split('-')[0].split('_')[1];--><!--  var dateString = (startDateOrEndDate == "endDate" ? "-" : "") + input.value.split('-').reverse().join('.') + (startDateOrEndDate == "startDate" ? "-" : "");--><!--  var associatedInput = document.querySelectorAll("input[name^='"+ associatedInputName +"-']")[0];--><!--  associatedInput.value = associatedInput.value.replace(regexToReplace[startDateOrEndDate], dateString);--><!--}--><!--function cartesian() {--><!--    var r = [], arg = arguments, max = arg.length-1;--><!--    function helper(arr, i) {--><!--        for (var j=0, l=arg[i].length; j<l; j++) {--><!--            var a = arr.slice(0); // clone arr--><!--            a.push(arg[i][j]);--><!--            if (i==max)--><!--                r.push(a);--><!--            else--><!--                helper(a, i+1);--><!--        }--><!--    }--><!--    helper([], 0);--><!--    return r.map(function(e) {return (e.join('').slice(0, -1).indexOf('//') >=0) ? "" : e.join('').replace('//', '/')}).filter(function (e) { return e.length > 0 });--><!--}--><!--var config = {--><!--  bills: ["Common Cost", "Electricity", "Gas", "Internet", "Management Fee", "Water", "Insurance", "Banking Fees", "Security", "Accounting", "Tax/Social Securities", "Tax/Property Tax", "Tax/VAT", "Tax/VAT-Refund"],--><!--  landlords: ["Holistic Solutions"],--><!--  expenses: ["Marketing", "Debt Write Off",--><!--             "Maintenance/", "Maintenance/Cleaning", "Maintenance/Gardening", "Maintenance/Swimming Pool", "Maintenance/Travel Costs", "Maintenance/Equipment", "Maintenance/Black Materials", "Maintenance/Furnitures", "Maintenance/Appliances", "Maintenance/Garbage Disposal",--><!--             "Legal Fees",--><!--             "Tax/", "Tax/Profit Tax", "Tax/Purchase Tax", "Tax/Tourist Tax",--><!--             "Renovation/", "Renovation/Management", "Renovation/Construction Labor", "Renovation/Worker Accomodations", "Renovation/Worker Personal Expenses", "Renovation/Electrician", "Renovation/Plumber", "Renovation/White Materials", "Renovation/Black Materials", "Renovation/Furnitures", "Renovation/Appliances", "Renovation/Accessories", "Renovation/Travel Costs", "Renovation/Assembly Labor", "Renovation/Cleaning Labor", "Renovation/Waste Disposal", "Renovation/Static Engineer", "Renovation/Utility Company Fees", "Renovation/Tools",--><!--             "Administration", "Purchase Cost", "Grants"],--><!--  employees: ["Amit", "Denitsa", "Joseph", "Yuval", "Rositsa", "Paysera", "Safe"],--><!--  assets: ["Sofia 7", "Pchelnik House", "Tundja 3", "General", "Pchelnik Ogosta", "Krivini House", "Plot Balam Dere Varna", "Pchelnik Vineyard 021038"],--><!--  tenant: ["Tenant"],--><!--  title: "Varna Transaction Submission Form"--><!--}--><!--var payerOptions = [].concat.apply([], [--><!--  cartesian(['Hospitality'], '/'),--><!--  cartesian(['Hospitality'], '/', config['assets'], '/'),--><!--  cartesian(['Hospitality'], '/', config['assets'], '/', ["DD.MM.YYYY-DD.MM.YYYY"]),--><!--  cartesian(config["tenant"], '/'),--><!--  cartesian(config["tenant"], '/', ['Deposit', 'Bills', 'Rent'], '/'),--><!--  cartesian(config["tenant"], '/', ['Deposit'], '/', config['assets']),--><!--  cartesian(config["tenant"], '/', ['Bills', 'Rent'], '/', config['assets'], '/'),--><!--  cartesian(config["tenant"], '/', ['Bills', 'Rent'], '/', config['assets'], '/', ["DD.MM.YYYY-DD.MM.YYYY"]),--><!--  config['landlords'],--><!--  config['employees']--><!--]);--><!--var beneficiaryOptions = [].concat.apply([], [--><!--  cartesian(config['bills'], '/'),--><!--  cartesian(config['bills'], '/', config['assets'], '/'),--><!--  cartesian(config['bills'], '/', config['assets'], '/', ["DD.MM.YYYY-DD.MM.YYYY"]),--><!--  cartesian(config['expenses'], '/'),--><!--  cartesian(config['expenses'], '/', config['assets']),--><!--  cartesian(config["tenant"], '/'),--><!--  cartesian(config["tenant"], '/', ['Deposit'], '/'),--><!--  cartesian(config["tenant"], '/', ['Deposit'], '/', config['assets']),--><!--  config['landlords'],--><!--  config['employees']--><!--]);--><!--var salt = Math.floor(Math.random()*10000000);--><!--document.querySelectorAll("form#transaction-form input").forEach(function (el) {--><!--      el.name = el.name + '-' + salt;--><!--    });--><!--configureInput(document.querySelector("form#transaction-form input[name^='payer-']"), payerOptions);--><!--configureInput(document.querySelector("form#transaction-form input[name^='beneficiary-']"), beneficiaryOptions);--><!--document.querySelector("form#transaction-form").addEventListener('submit', submitForm);--><!--</script>-->
+
+</script>
 </body>
 </html>
