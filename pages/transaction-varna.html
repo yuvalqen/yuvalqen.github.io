@@ -9,8 +9,8 @@
 .. template: accounting-form.tmpl
 
 <style>
-  body {
-    font-size: 2em;
+  body, body input, body textarea, body button, body select {
+    font-size: 1.3em;
   }
   #main-form td {
     padding: 5px;
@@ -18,12 +18,13 @@
   #main-form input, #main-form div.awesomplete, #main-form button[type='submit'] {
     width: 100%;
   }
+  #main-form input.expense-perc { width: 50px; }
+  #main-form textarea { width: 300px; }
 
   input.empty { background-color: white; }
   input.valid { background-color: rgba(0, 162, 80, 0.2); }
   input.invalid { background-color: rgba(163, 13, 13, 0.2); }
 
-  input.expense-perc { width: 50px; }
 
   tr.no-options { display: none; }
   tr.hidden-row { display: none; }
@@ -34,16 +35,17 @@
 </style>
 <p id="loader">Loading...</p>
 <form id="main-form"
-  method="POST"
-  action="https://script.google.com/macros/s/AKfycbwgqMmEu8nhkiUgcWySnbsfK8x2AWSnej8Hftw7tPVpjcmhxIhmGHB4sjsPok7H_5O9/exec"
-  style="display:none;"
->
+      target="_blank"
+      method="POST"
+      action="https://script.google.com/macros/s/AKfycbwgqMmEu8nhkiUgcWySnbsfK8x2AWSnej8Hftw7tPVpjcmhxIhmGHB4sjsPok7H_5O9/exec"
+      style="display:none;">
   <table>
-  {{% form_field name="Payer" type='input' %}}
-  {{% form_field name="Type" type='input' %}}
+  {{% form_field name="Payer" type='input' required=true %}}
+  {{% form_field name="Type" type='input' required=true %}}
 
 
   {{% form_field name="Asset" type='input' %}}
+  {{% form_field name="Offer" type='input' %}}
   {{% form_field name="Payee" type='input' %}}
   {{% form_field name="Expense" type='input' %}}
   {{% form_field name="Expense" type='input' index=1 %}}
@@ -54,16 +56,16 @@
   <tr><td></td><td><button class="btn btn-default expense-btn add-expense"></button></td></tr>
   {{% form_field name="Period Start" type='date' %}}
   {{% form_field name="Period End" type='date' %}}
-  {{% form_field name="Offer" type='input' %}}
 
-  {{% form_field name="Amount" type='number' %}}
-  {{% form_field name="Currency" type='select' options='EUR,BGN' %}}
+  {{% form_field name="Amount" type='number' required %}}
+  {{% form_field name="Currency" type='select' options='BGN,EUR' %}}
   {{% form_field name="Payment Date" type='date' %}}
   {{% form_field name="Comment" type='textarea' %}}
   <tr><td></td><td><button type="submit">Send</button></td></tr>
   </table>
 </form>
 
+<p id="after_submission" style="display: none;">Transaction submitted, <a id="restart_form">Click here</a> to submit another.</p>
 
 <script type="text/javascript">
   function configureInput(input) {
@@ -133,23 +135,23 @@
         final_options.push(partial_option.slice());
       }
     }
-    options = final_options.sort().filter(function(item, pos, ary) { // Deduplicates array values
+    final_options = final_options.sort().filter(function(item, pos, ary) { // Deduplicates array values
         return !pos || item !== ary[pos - 1];
     });
-    awesomeplete.list = options;
+    awesomeplete.list = final_options;
 
-    if (options.length === 0) {
+    if (final_options.length === 0) {
       awesomeplete.input.closest('tr').classList.add('no-options');
       awesomeplete.input.value = '';
     } else {
       awesomeplete.input.closest('tr').classList.remove('no-options');
-      if (options.length === 1 && awesomeplete.input.value === '') {
+      if (options.length === 1) { // Purposefully left as options and not final_options
         awesomeplete.input.value = options[0];
       }
       awesomeplete.input.classList.remove('empty', 'invalid', 'valid');
       if (awesomeplete.input.value === '') {
         awesomeplete.input.classList.add('empty')
-      } else if (options.indexOf(awesomeplete.input.value) >= 0) {
+      } else if (final_options.indexOf(awesomeplete.input.value) >= 0) {
         awesomeplete.input.classList.add('valid')
       } else {
         awesomeplete.input.classList.add('invalid')
@@ -163,7 +165,7 @@
     switch (form_values.Type) {
       case 'Transfer': res = Object.keys(accounts); break;
       case 'Service': res = Object.keys(entities).filter(e => ['Vendor', 'Investor', ''].indexOf(entities[e].Type) === -1 ); break;
-      case 'Offer': res = []; break;
+      case 'Offer': res = Object.keys(entities).filter(e => offers[form_values.Offer] && e === offers[form_values.Offer]['Contractor']); break;
       case 'Materials': res = Object.keys(entities).filter(e => entities[e].Type === 'Vendor'); break;
       case 'Lump Sum': res = []; break;
     }
@@ -172,15 +174,24 @@
 
   function getExpenseOptions(multiple_expenses) {
     const form_values = Object.fromEntries(new FormData(document.getElementById('main-form')));
-    if (form_values.Payee === '' || form_values.Type !== (multiple_expenses ? 'Materials' : 'Service')) {
-      return [];
+
+    if (form_values.Type === 'Offer' && form_values.Offer !== '' && !multiple_expenses) {
+      let res = Object.values(expenses)
+              .filter(e => e['Expense'] === offers[form_values.Offer]['Expense'])
+              .map(e => e.Expense);
+      return res.length ? res : [''];
     }
 
-    return Object.values(expenses)
-            .filter(e => e['Entity Type'].split(',').indexOf(entities[form_values.Payee].Type) >= 0)
-            .filter(e => !e['Offer Mandatory'])
-            .filter(e => form_values.Asset !== 'General' || e['General Allowed'])
-            .map(e => e.Expense) || [''];
+    if (form_values.Payee !== '' && form_values.Type === (multiple_expenses ? 'Materials' : 'Service')) {
+      let res = Object.values(expenses)
+              .filter(e => e['Entity Type'].split(',').indexOf(entities[form_values.Payee].Type) >= 0)
+              .filter(e => !e['Offer Mandatory'])
+              .filter(e => form_values.Asset !== 'General' || e['General Allowed'])
+              .map(e => e.Expense);
+      return res.length ? res : [''];
+    }
+
+    return [];
   }
 
   function getAssetOptions() {
@@ -195,7 +206,8 @@
     const form_values = Object.fromEntries(new FormData(document.getElementById('main-form')));
     switch (form_values.Type) {
       case 'Offer':
-        return Object.values(offers).filter(e => (e['Asset'] == form_values.Asset)).map(e => e.Offer);
+        let res = Object.values(offers).filter(e => (e['Asset'] === form_values.Asset)).map(e => e.Offer);
+        return res.length ? res : [''];
       default:
         return [];
     }
@@ -204,12 +216,16 @@
     const form_values = Object.fromEntries(new FormData(document.getElementById('main-form')));
     return form_values.Type === 'Lump Sum' || expenses[form_values.Expense] && expenses[form_values.Expense]['Period based'];
   }
+  function displayPaymentDate() {
+    const form_values = Object.fromEntries(new FormData(document.getElementById('main-form')));
+    return form_values.Type !== 'Lump Sum';
+  }
   function updateInputs() {
     updateAwesomepleInput(awesomepletes.payer, Object.keys(accounts));
     updateAwesomepleInput(awesomepletes.type, ['Service', 'Offer', 'Materials', 'Transfer', 'Lump Sum']);
     updateAwesomepleInput(awesomepletes.assets, getAssetOptions());
-    updateAwesomepleInput(awesomepletes.payee, getPayeeOptions());
     updateAwesomepleInput(awesomepletes.offers, getOfferOptions());
+    updateAwesomepleInput(awesomepletes.payee, getPayeeOptions());
     updateAwesomepleInput(awesomepletes.expense, getExpenseOptions(false));
     let multiple_options = getExpenseOptions(true);
     for (let i = 0; i < awesomepletes.multiple_expenses.length; i++) {
@@ -220,6 +236,7 @@
     } else {
       document.querySelector('button.add-expense').closest('tr').classList.add('no-options');
     }
+    updateRegularInput(document.getElementById("field_Payment Date"), displayPaymentDate());
     updateRegularInput(document.getElementById("field_Period Start"), displayPeriod());
     updateRegularInput(document.getElementById("field_Period End"), displayPeriod());
   }
@@ -318,6 +335,23 @@
       ev.target.style.height = "1px";
       ev.target.style.height = (25+ev.target.scrollHeight)+"px";
     }));
+
+    document.querySelector('#main-form').addEventListener('submit', function (ev) {
+      console.log(Object.fromEntries(new FormData(ev.target)));
+
+      document.querySelector('#main-form').style.display = 'none';
+      document.querySelector('#after_submission').style.display = 'block';
+    });
+
+    document.querySelector("#restart_form").addEventListener('click', function (ev) {
+      ev.preventDefault();
+      main_form.querySelectorAll('input,textarea,select,button').forEach(function(el) {
+        el.value = el.querySelector('option') ? el.querySelector('option').value : '';
+      });
+      document.querySelector('#main-form').style.display = 'block';
+      document.querySelector('#after_submission').style.display = 'none';
+      updateInputs();
+    });
   });
 
 </script>

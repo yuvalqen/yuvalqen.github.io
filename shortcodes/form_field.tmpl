@@ -5,17 +5,17 @@
     <td>
     % if type == 'input':
         % if index:
-            <input id="field_${name}_${index}" name="${name}_${index}" placeholder="${name} ${index}" type="text" />
+            <input id="field_${name}_${index}" name="${name}_${index}" ${'required ' if required else ''}placeholder="${name} ${index}" type="text" />
             </td><td>
-            <input id="field_${name}_${index}_perc" class="expense-perc" name="${name}_${index}_perc" type="number" step=10 value="${100 if int(index) == 1 else 0}" />%
+            <input id="field_${name}_${index}_perc" class="expense-perc" name="${name}_${index}_perc" ${'required ' if required else ''}type="number" step=10 value="${100 if int(index) == 1 else 0}" />%
             % if int(index) > 1:
                 </td><td><button class="btn btn-default add-remove-btn remove-expense" data-index=${index}></button>
             % endif
         % else:
-            <input id="field_${name}" name="${name}" placeholder="${name}" type="text" />
+            <input id="field_${name}" name="${name}" ${'required ' if required else ''}placeholder="${name}" type="text" />
         % endif
     % elif type == 'date':
-        <input id="field_${name}" name="${name}" placeholder="${name}" type="date" onchange="updateDates(this)" onfocus="this.showPicker()" />
+        <input id="field_${name}" name="${name}" ${'required ' if required else ''}placeholder="${name}" type="date" onchange="updateDates(this)" onfocus="this.showPicker()" />
     % elif type == 'select':
         <select id="field_${name}" name="${name}">
             % for option in options.split(','):
@@ -23,9 +23,9 @@
             % endfor
         </select>
     % elif type == 'textarea':
-        <textarea id="field_${name}" name="${name}" placeholder="${name}"></textarea>
+        <textarea id="field_${name}" name="${name}" ${'required ' if required else ''}placeholder="${name}"></textarea>
     % elif type == 'number':
-        <input id="field_${name}" name="${name}" placeholder="${name}" type="number" />
+        <input id="field_${name}" name="${name}" ${'required ' if required else ''}placeholder="${name}" type="number" step=".01" />
     % endif
     </td>
 </tr>
