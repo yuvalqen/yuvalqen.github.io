@@ -23,8 +23,8 @@
   #main-form input, #main-form div.awesomplete, #main-form button[type='submit'] {
     width: 100%;
   }
-  #main-form input.expense-perc { width: 50px; }
-  #main-form textarea { width: 300px; }
+  #main-form input.category-perc { width: 75px; }
+  #main-form textarea { width: 350px; }
 
   input.empty { background-color: white; }
   input.valid { background-color: rgba(0, 162, 80, 0.2); }
@@ -35,26 +35,26 @@
   tr.hidden-row { display: none; }
 
   button.add-remove-btn {}
-  button.add-expense:before { content: '+'; }
-  button.remove-expense:before { content: '-'; }
+  button.add-category:before { content: '+'; }
+  button.remove-category:before { content: '-'; }
 </style>
 <p id="loader">Loading...</p>
 <form id="main-form" target="_blank" method="POST" action="https://script.google.com/macros/s/AKfycbwgqMmEu8nhkiUgcWySnbsfK8x2AWSnej8Hftw7tPVpjcmhxIhmGHB4sjsPok7H_5O9/exec" style="display:none;">
   <table>
 <tr>
 <td>
-        <label for="field_Payer">Payer</label>
-    </td>
-    <td>
-            <input id="field_Payer" name="Payer" required placeholder="Payer" type="text">
-</td>
-</tr>
-<tr>
-<td>
         <label for="field_Type">Type</label>
     </td>
     <td>
             <input id="field_Type" name="Type" required placeholder="Type" type="text">
+</td>
+</tr>
+<tr>
+<td>
+        <label for="field_Payer">Payer</label>
+    </td>
+    <td>
+            <input id="field_Payer" name="Payer" required placeholder="Payer" type="text">
 </td>
 </tr>
 <tr>
@@ -83,82 +83,82 @@
 </tr>
 <tr>
 <td>
-        <label for="field_Expense">Expense</label>
+        <label for="field_Category">Category</label>
     </td>
     <td>
-            <input id="field_Expense" name="Expense" placeholder="Expense" type="text">
+            <input id="field_Category" name="Category" placeholder="Category" type="text">
 </td>
 </tr>
 <tr>
 <td>
-        <label for="field_Expense">Expense</label>
+        <label for="field_Category">Category</label>
     </td>
     <td>
-            <input id="field_Expense_1" name="Expense_1" placeholder="Expense 1" type="text">
+            <input id="field_Category_1" name="Category_1" placeholder="Category 1" type="text">
 </td>
 <td>
-            <input id="field_Expense_1_perc" class="expense-perc" name="Expense_1_perc" type="number" step="10" value="100">%
+            <input id="field_Category_1_perc" class="category-perc" name="Category_1_perc" type="number" step="10" value="100">%
     </td>
 </tr>
 <tr class="hidden-row">
 <td>
-        <label for="field_Expense">Expense</label>
+        <label for="field_Category">Category</label>
     </td>
     <td>
-            <input id="field_Expense_2" name="Expense_2" placeholder="Expense 2" type="text">
+            <input id="field_Category_2" name="Category_2" placeholder="Category 2" type="text">
 </td>
 <td>
-            <input id="field_Expense_2_perc" class="expense-perc" name="Expense_2_perc" type="number" step="10" value="0">%
+            <input id="field_Category_2_perc" class="category-perc" name="Category_2_perc" type="number" step="10" value="0">%
                 </td>
 <td>
-<button class="btn btn-default add-remove-btn remove-expense" data-index="2"></button>
+<button class="btn btn-default add-remove-btn remove-category" data-index="2"></button>
     </td>
 </tr>
 <tr class="hidden-row">
 <td>
-        <label for="field_Expense">Expense</label>
+        <label for="field_Category">Category</label>
     </td>
     <td>
-            <input id="field_Expense_3" name="Expense_3" placeholder="Expense 3" type="text">
+            <input id="field_Category_3" name="Category_3" placeholder="Category 3" type="text">
 </td>
 <td>
-            <input id="field_Expense_3_perc" class="expense-perc" name="Expense_3_perc" type="number" step="10" value="0">%
+            <input id="field_Category_3_perc" class="category-perc" name="Category_3_perc" type="number" step="10" value="0">%
                 </td>
 <td>
-<button class="btn btn-default add-remove-btn remove-expense" data-index="3"></button>
+<button class="btn btn-default add-remove-btn remove-category" data-index="3"></button>
     </td>
 </tr>
 <tr class="hidden-row">
 <td>
-        <label for="field_Expense">Expense</label>
+        <label for="field_Category">Category</label>
     </td>
     <td>
-            <input id="field_Expense_4" name="Expense_4" placeholder="Expense 4" type="text">
+            <input id="field_Category_4" name="Category_4" placeholder="Category 4" type="text">
 </td>
 <td>
-            <input id="field_Expense_4_perc" class="expense-perc" name="Expense_4_perc" type="number" step="10" value="0">%
+            <input id="field_Category_4_perc" class="category-perc" name="Category_4_perc" type="number" step="10" value="0">%
                 </td>
 <td>
-<button class="btn btn-default add-remove-btn remove-expense" data-index="4"></button>
+<button class="btn btn-default add-remove-btn remove-category" data-index="4"></button>
     </td>
 </tr>
 <tr class="hidden-row">
 <td>
-        <label for="field_Expense">Expense</label>
+        <label for="field_Category">Category</label>
     </td>
     <td>
-            <input id="field_Expense_5" name="Expense_5" placeholder="Expense 5" type="text">
+            <input id="field_Category_5" name="Category_5" placeholder="Category 5" type="text">
 </td>
 <td>
-            <input id="field_Expense_5_perc" class="expense-perc" name="Expense_5_perc" type="number" step="10" value="0">%
+            <input id="field_Category_5_perc" class="category-perc" name="Category_5_perc" type="number" step="10" value="0">%
                 </td>
 <td>
-<button class="btn btn-default add-remove-btn remove-expense" data-index="5"></button>
+<button class="btn btn-default add-remove-btn remove-category" data-index="5"></button>
     </td>
 </tr>
 <tr>
 <td></td>
-<td><button class="btn btn-default expense-btn add-expense"></button></td>
+<td><button class="btn btn-default category-btn add-category"></button></td>
 </tr>
 <tr>
 <td>
@@ -207,6 +207,14 @@
     </td>
     <td>
         <textarea id="field_Comment" name="Comment" placeholder="Comment"></textarea>
+</td>
+</tr>
+<tr>
+<td>
+        <label for="field_Attachment">Attachment</label>
+    </td>
+    <td>
+        <input id="field_Attachment" name="Attachment" placeholder="Attachment" type="file"><input type="hidden" name="Attachment_content"><input type="hidden" name="Attachment_mimeType">
 </td>
 </tr>
 <tr>
@@ -310,12 +318,23 @@
     }
   }
 
+  function getPayerOptions() {
+    const form_values = Object.fromEntries(new FormData(document.getElementById('main-form')));
+    switch (form_values.Type) {
+      case 'Income':
+        let income_generating_types = Object.values(incomes).map(e => e['Entity Type'].split(',')).flat();
+        return Object.keys(entities).filter(e => income_generating_types.indexOf(entities[e].Type) >= 0);
+      default:
+        return Object.keys(accounts);
+    }
+  }
+
   function getPayeeOptions() {
     const form_values = Object.fromEntries(new FormData(document.getElementById('main-form')));
     let res = [];
     switch (form_values.Type) {
-      case 'Transfer': res = Object.keys(accounts); break;
-      case 'Service': res = Object.keys(entities).filter(e => ['Vendor', 'Investor', ''].indexOf(entities[e].Type) === -1 ); break;
+      case 'Income': case 'Transfer': res = Object.keys(accounts); break;
+      case 'Service': res = Object.keys(entities).filter(e => ['Vendor', ''].indexOf(entities[e].Type) === -1 ); break;
       case 'Offer': res = Object.keys(entities).filter(e => offers[form_values.Offer] && e === offers[form_values.Offer]['Contractor']); break;
       case 'Materials': res = Object.keys(entities).filter(e => entities[e].Type === 'Vendor'); break;
       case 'Lump Sum': res = []; break;
@@ -323,17 +342,25 @@
     return res.filter(e => e !== form_values.Payer);
   }
 
-  function getExpenseOptions(multiple_expenses) {
+  function getCategoryOptions(multiple_categories) {
     const form_values = Object.fromEntries(new FormData(document.getElementById('main-form')));
 
-    if (form_values.Type === 'Offer' && form_values.Offer !== '' && !multiple_expenses) {
+    if (form_values.Type === 'Offer' && form_values.Offer !== '' && !multiple_categories) {
       let res = Object.values(expenses)
               .filter(e => e['Expense'] === offers[form_values.Offer]['Expense'])
               .map(e => e.Expense);
       return res.length ? res : [''];
     }
 
-    if (form_values.Payee !== '' && form_values.Type === (multiple_expenses ? 'Materials' : 'Service')) {
+    if (form_values.Payer !== '' && form_values.Type === 'Income' && !multiple_categories) {
+      let res = Object.values(incomes)
+              .filter(e => e['Entity Type'].split(',').indexOf(entities[form_values.Payer].Type) >= 0)
+              .filter(e => form_values.Asset !== 'General' || e['General Allowed'])
+              .map(e => e.Income);
+      return res.length ? res : [''];
+    }
+
+    if (form_values.Payee !== '' && form_values.Type === (multiple_categories ? 'Materials' : 'Service')) {
       let res = Object.values(expenses)
               .filter(e => e['Entity Type'].split(',').indexOf(entities[form_values.Payee].Type) >= 0)
               .filter(e => !e['Offer Mandatory'])
@@ -365,27 +392,33 @@
   }
   function displayPeriod() {
     const form_values = Object.fromEntries(new FormData(document.getElementById('main-form')));
-    return form_values.Type === 'Lump Sum' || expenses[form_values.Expense] && expenses[form_values.Expense]['Period based'];
+    switch (form_values.Type) {
+      case 'Lump Sum': return true;
+      case 'Income': return incomes[form_values.Category] && incomes[form_values.Category]['Period based'];
+      case 'Service': return expenses[form_values.Category] && expenses[form_values.Category]['Period based'];
+      default: return false;
+    }
   }
+
   function displayPaymentDate() {
     const form_values = Object.fromEntries(new FormData(document.getElementById('main-form')));
     return form_values.Type !== 'Lump Sum';
   }
   function updateInputs() {
-    updateAwesomepleInput(awesomepletes.payer, Object.keys(accounts));
-    updateAwesomepleInput(awesomepletes.type, ['Service', 'Offer', 'Materials', 'Transfer', 'Lump Sum']);
+    updateAwesomepleInput(awesomepletes.type, ['Income', 'Service', 'Offer', 'Materials', 'Transfer', 'Lump Sum']);
+    updateAwesomepleInput(awesomepletes.payer, getPayerOptions());
     updateAwesomepleInput(awesomepletes.assets, getAssetOptions());
     updateAwesomepleInput(awesomepletes.offers, getOfferOptions());
     updateAwesomepleInput(awesomepletes.payee, getPayeeOptions());
-    updateAwesomepleInput(awesomepletes.expense, getExpenseOptions(false));
-    let multiple_options = getExpenseOptions(true);
-    for (let i = 0; i < awesomepletes.multiple_expenses.length; i++) {
-      updateAwesomepleInput(awesomepletes.multiple_expenses[i], multiple_options);
+    updateAwesomepleInput(awesomepletes.category, getCategoryOptions(false));
+    let multiple_categories = getCategoryOptions(true);
+    for (let i = 0; i < awesomepletes.multiple_categories.length; i++) {
+      updateAwesomepleInput(awesomepletes.multiple_categories[i], multiple_categories);
     }
-    if (multiple_options.length > 0) {
-      document.querySelector('button.add-expense').closest('tr').classList.remove('no-options');
+    if (multiple_categories.length > 0) {
+      document.querySelector('button.add-category').closest('tr').classList.remove('no-options');
     } else {
-      document.querySelector('button.add-expense').closest('tr').classList.add('no-options');
+      document.querySelector('button.add-category').closest('tr').classList.add('no-options');
     }
     updateRegularInput(document.getElementById("field_Payment Date"), displayPaymentDate());
     updateRegularInput(document.getElementById("field_Period Start"), displayPeriod());
@@ -396,13 +429,13 @@
       type: configureInput(document.querySelector("#field_Type")),
       payer: configureInput(document.querySelector("#field_Payer")),
       payee:configureInput(document.querySelector("#field_Payee")),
-      expense: configureInput(document.querySelector("#field_Expense")),
-      multiple_expenses: [
-        configureInput(document.querySelector("#field_Expense_1")),
-        configureInput(document.querySelector("#field_Expense_2")),
-        configureInput(document.querySelector("#field_Expense_3")),
-        configureInput(document.querySelector("#field_Expense_4")),
-        configureInput(document.querySelector("#field_Expense_5")),
+      category: configureInput(document.querySelector("#field_Category")),
+      multiple_categories: [
+        configureInput(document.querySelector("#field_Category_1")),
+        configureInput(document.querySelector("#field_Category_2")),
+        configureInput(document.querySelector("#field_Category_3")),
+        configureInput(document.querySelector("#field_Category_4")),
+        configureInput(document.querySelector("#field_Category_5")),
       ],
       assets: configureInput(document.querySelector("#field_Asset")),
       offers: configureInput(document.querySelector("#field_Offer")),
@@ -441,6 +474,7 @@
   window.addEventListener("load", function() {
     getInitialData().then(() => {
       window.expenses = composeDimension('Expense', raw_data['expenses']);
+      window.incomes = composeDimension('Income', raw_data['incomes']);
       window.assets = composeDimension('Asset', raw_data['assets']);
       window.offers = composeDimension('Offer', raw_data['offers']);
       window.entities = composeDimension('Entity', raw_data['entities']);
@@ -448,31 +482,31 @@
       initInputs();
     });
 
-    document.querySelectorAll('button.remove-expense').forEach(el => el.addEventListener('click', function (ev) {
+    document.querySelectorAll('button.remove-category').forEach(el => el.addEventListener('click', function (ev) {
       ev.preventDefault();
-      let input = document.querySelector('#field_Expense_' + ev.target.getAttribute('data-index'));
+      let input = document.querySelector('#field_Category_' + ev.target.getAttribute('data-index'));
       input.value = '';
       input.closest('tr').classList.add('hidden-row');
-      document.querySelector('button.add-expense').removeAttribute('disabled');
+      document.querySelector('button.add-category').removeAttribute('disabled');
     }));
 
-    document.querySelector('button.add-expense').addEventListener('click', function (ev) {
+    document.querySelector('button.add-category').addEventListener('click', function (ev) {
       ev.preventDefault();
-      let input = document.querySelector('tr.hidden-row [id^="field_Expense_"]')
+      let input = document.querySelector('tr.hidden-row [id^="field_Category_"]')
       input.closest('tr').classList.remove('hidden-row');
-      if (!document.querySelector('tr.hidden-row [id^="field_Expense_"]')) {
-        document.querySelector('button.add-expense').setAttribute('disabled', '');
+      if (!document.querySelector('tr.hidden-row [id^="field_Category_"]')) {
+        document.querySelector('button.add-category').setAttribute('disabled', '');
       }
     });
 
-    document.querySelectorAll('input.expense-perc').forEach(el => el.addEventListener('change', function (ev) {
+    document.querySelectorAll('input.category-perc').forEach(el => el.addEventListener('change', function (ev) {
         ev.preventDefault();
         let sum_perc = 0;
-        document.querySelectorAll('input.expense-perc').forEach(el => {
+        document.querySelectorAll('input.category-perc').forEach(el => {
             let perc = parseFloat(el.value);
             sum_perc += perc;
         });
-        document.querySelectorAll('input.expense-perc').forEach(el => {
+        document.querySelectorAll('input.category-perc').forEach(el => {
           el.classList.remove('empty', 'invalid', 'valid');
           if (sum_perc !== 100) {
             el.classList.add('invalid');
@@ -489,9 +523,20 @@
 
     document.querySelector('#main-form').addEventListener('submit', function (ev) {
       console.log(Object.fromEntries(new FormData(ev.target)));
+      ev.preventDefault();
 
-      document.querySelector('#main-form').style.display = 'none';
-      document.querySelector('#after_submission').style.display = 'block';
+      const file = main_form.Attachment.files[0];
+      const fr = new FileReader();
+      fr.readAsArrayBuffer(file);
+      fr.onload = function(f) {
+        main_form.Attachment_content.value = JSON.stringify([...new Int8Array(f.target.result)]);
+        main_form.Attachment_mimeType.value = file.type;
+
+        main_form.submit();
+
+        document.querySelector('#main-form').style.display = 'none';
+        document.querySelector('#after_submission').style.display = 'block';
+      };
     });
 
     document.querySelector("#restart_form").addEventListener('click', function (ev) {
