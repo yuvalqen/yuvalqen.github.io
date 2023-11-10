@@ -7,9 +7,9 @@
         % if index:
             <input id="field_${name}_${index}" name="${name}_${index}" ${'required ' if required else ''}placeholder="${name} ${index}" type="text" />
             </td><td>
-            <input id="field_${name}_${index}_perc" class="expense-perc" name="${name}_${index}_perc" ${'required ' if required else ''}type="number" step=10 value="${100 if int(index) == 1 else 0}" />%
+            <input id="field_${name}_${index}_perc" class="category-perc" name="${name}_${index}_perc" ${'required ' if required else ''}type="number" step=10 value="${100 if int(index) == 1 else 0}" />%
             % if int(index) > 1:
-                </td><td><button class="btn btn-default add-remove-btn remove-expense" data-index=${index}></button>
+                </td><td><button class="btn btn-default add-remove-btn remove-category" data-index=${index}></button>
             % endif
         % else:
             <input id="field_${name}" name="${name}" ${'required ' if required else ''}placeholder="${name}" type="text" />
@@ -26,6 +26,8 @@
         <textarea id="field_${name}" name="${name}" ${'required ' if required else ''}placeholder="${name}"></textarea>
     % elif type == 'number':
         <input id="field_${name}" name="${name}" ${'required ' if required else ''}placeholder="${name}" type="number" step=".01" />
+    % elif type == 'file':
+        <input id="field_${name}" name="${name}" ${'required ' if required else ''}placeholder="${name}" type="file" /><input type="hidden" name="${name}_content" /><input type="hidden" name="${name}_mimeType" />
     % endif
     </td>
 </tr>
