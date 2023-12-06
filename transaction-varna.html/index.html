@@ -345,6 +345,10 @@
   function getCategoryOptions(multiple_categories) {
     const form_values = Object.fromEntries(new FormData(document.getElementById('main-form')));
 
+    if (form_values.Type === 'Lump Sum' && !multiple_categories) {
+      return ['Lump Sum'];
+    }
+
     if (form_values.Type === 'Offer' && form_values.Offer !== '' && !multiple_categories) {
       let res = Object.values(expenses)
               .filter(e => e['Expense'] === offers[form_values.Offer]['Expense'])
@@ -525,18 +529,26 @@
       console.log(Object.fromEntries(new FormData(ev.target)));
       ev.preventDefault();
 
-      const file = main_form.Attachment.files[0];
-      const fr = new FileReader();
-      fr.readAsArrayBuffer(file);
-      fr.onload = function(f) {
-        main_form.Attachment_content.value = JSON.stringify([...new Int8Array(f.target.result)]);
-        main_form.Attachment_mimeType.value = file.type;
-
+      const complete_submission = function() {
         main_form.submit();
 
         document.querySelector('#main-form').style.display = 'none';
         document.querySelector('#after_submission').style.display = 'block';
       };
+
+      if (main_form.Attachment.files.length > 0) {
+        const file = main_form.Attachment.files[0];
+        const fr = new FileReader();
+        fr.readAsArrayBuffer(file);
+        fr.onload = function(f) {
+          main_form.Attachment_content.value = JSON.stringify([...new Int8Array(f.target.result)]);
+          main_form.Attachment_mimeType.value = file.type;
+
+          complete_submission();
+        };
+      } else {
+        complete_submission();
+      }
     });
 
     document.querySelector("#restart_form").addEventListener('click', function (ev) {
