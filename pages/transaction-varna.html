@@ -206,7 +206,7 @@
 
     if (form_values.Payee !== '' && form_values.Type === (multiple_categories ? 'Materials' : 'Service')) {
       let res = Object.values(expenses)
-              .filter(e => e['Entity Type'].split(',').indexOf(entities[form_values.Payee].Type) >= 0)
+              .filter(e => !e['Entity Type'].split(',').every(en => !entities[form_values.Payee].Type.split(',').includes(en)))
               .filter(e => !e['Offer Mandatory'])
               .filter(e => form_values.Asset !== 'General' || e['General Allowed'])
               .map(e => e.Expense);
