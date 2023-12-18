@@ -336,7 +336,7 @@
       case 'Income': case 'Transfer': res = Object.keys(accounts); break;
       case 'Service': res = Object.keys(entities).filter(e => ['Vendor', ''].indexOf(entities[e].Type) === -1 ); break;
       case 'Offer': res = Object.keys(entities).filter(e => offers[form_values.Offer] && e === offers[form_values.Offer]['Contractor']); break;
-      case 'Materials': res = Object.keys(entities).filter(e => entities[e].Type === 'Vendor'); break;
+      case 'Materials': res = Object.keys(entities).filter(e => entities[e].Type.indexOf('Vendor') >= 0); break;
       case 'Lump Sum': res = []; break;
     }
     return res.filter(e => e !== form_values.Payer);
