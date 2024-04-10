@@ -213,56 +213,7 @@ Don’t take my word for it, ask these guys:
       <center><h1 class="section-title">Services</h1></center>
       <section class="feature-text"><div class="row grid clearfix">
 
-<script>
-  function doubleEasing(x) {
-    return x < 0.5 ? easing(x * 2) / 2 : easing(x * 2 - 1) / 2 + 0.5;
-  }
-  function easing(x) {
-    return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
-  }
-
-  window.addEventListener("scroll", function(e) {
-    var animationRect = $("#services_animation")[0];
-    var bcr = animationRect.getBoundingClientRect();
-    var scrollProgress =  document.documentElement.clientHeight-bcr.top;
-
-    console.log(scrollProgress);
-
-    if (scrollProgress > 0 && scrollProgress < bcr.height+document.documentElement.clientHeight) {
-      $(animationRect).find(".anim_obj").each(function () {
-        var steps = JSON.parse(this.getAttribute("data-anim-steps"));
-        var step_found = false;
-        var scrollProgressSub = scrollProgress;
-        for (var i = 0; i < steps.length; i++) {
-          scrollProgressSub -= steps[i][0];
-          if (scrollProgressSub < 0) {
-            var step_progress = (steps[i][0] + scrollProgressSub)/steps[i][0];
-            console.log(i, step_progress);
-            if (i > 0 && steps[i].length == 3 && steps[i-1].length == 3) {
-              step_found = true;
-              this.style.top = (steps[i-1][1] + (steps[i][1] - steps[i-1][1]) * step_progress) + 'px';
-              this.style.left = (steps[i-1][2] + (steps[i][2] - steps[i-1][2]) * doubleEasing(step_progress)) + '%';
-
-              
-              const fade_in_threshold = 30;
-              var scroll_from_step_start = scrollProgressSub + steps[i][0];
-              var scroll_from_step_end = -scrollProgressSub;
-              if (((i < 2) || (steps[i-2].length == 1)) && scroll_from_step_start < fade_in_threshold) { // first step
-                this.style.opacity = scroll_from_step_start / fade_in_threshold;
-              } else if (((i > steps.length - 2) || (steps[i+1].length == 1)) && scroll_from_step_end < fade_in_threshold) { // last step
-                this.style.opacity = scroll_from_step_end / fade_in_threshold;
-              } else {
-                this.style.opacity = 1;
-              }
-            }
-            break;
-          }
-        }
-        this.style.display = step_found ? 'block' : 'none';
-      });
-    }
-  });
-</script><div class="row grid clearfix">
+<div class="row grid clearfix">
 	<div class="speech col-md-10 col-xs-11
 	right fadeInRight col-md-offset-2 col-xs-offset-1
 	wow" data-wow-delay="0.7s">
@@ -560,7 +511,61 @@ Website, inside a business card, inside a website? Clever.
                   </section>
 </div>
       </div>
-</article></section><footer id="footer"><p>© 2015 - 2024 <a href="mailto:hi@yuvalqen.com">Ideal Skill LTD</a></p>
+</article><script>
+  function doubleEasing(x) {
+    return x < 0.5 ? easing(x * 2) / 2 : easing(x * 2 - 1) / 2 + 0.5;
+  }
+  function easing(x) {
+    return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+  }
+
+  function adjustObjects(animationRect, scrollProgress) {
+    console.log(scrollProgress);
+  $(animationRect).find(".anim_obj").each(function () {
+        var steps = JSON.parse(this.getAttribute("data-anim-steps"));
+        var step_found = false;
+        var scrollProgressSub = scrollProgress;
+        for (var i = 0; i < steps.length; i++) {
+          scrollProgressSub -= steps[i][0];
+          if (scrollProgressSub < 0) {
+            var step_progress = (steps[i][0] + scrollProgressSub)/steps[i][0];
+            // console.log(i, step_progress);
+            if (i > 0 && steps[i].length == 3 && steps[i-1].length == 3) {
+              step_found = true;
+              this.style.top = (steps[i-1][1] + (steps[i][1] - steps[i-1][1]) * step_progress) + 'px';
+              this.style.left = (steps[i-1][2] + (steps[i][2] - steps[i-1][2]) * doubleEasing(step_progress)) + '%';
+
+
+              const fade_in_threshold = 30;
+              var scroll_from_step_start = scrollProgressSub + steps[i][0];
+              var scroll_from_step_end = -scrollProgressSub;
+              if (((i < 2) || (steps[i-2].length == 1)) && scroll_from_step_start < fade_in_threshold) { // first step
+                this.style.opacity = scroll_from_step_start / fade_in_threshold;
+              } else if (((i > steps.length - 2) || (steps[i+1].length == 1)) && scroll_from_step_end < fade_in_threshold) { // last step
+                this.style.opacity = scroll_from_step_end / fade_in_threshold;
+              } else {
+                this.style.opacity = 1;
+              }
+            }
+            break;
+          }
+        }
+        this.style.display = step_found ? 'block' : 'none';
+      });
+  }
+
+  window.addEventListener("scroll", function(e) {
+    var animationRect = $("#services_animation")[0];
+    var bcr = animationRect.getBoundingClientRect();
+    var scrollProgress =  document.documentElement.clientHeight-bcr.top;
+
+    if (scrollProgress > 0 && scrollProgress < bcr.height+document.documentElement.clientHeight) {
+        adjustObjects(animationRect, scrollProgress);
+    }
+  });
+
+  adjustObjects($("#services_animation")[0], 0);
+</script></section><footer id="footer"><p>© 2015 - 2024 <a href="mailto:hi@yuvalqen.com">Ideal Skill LTD</a></p>
             
         </footer>
 </body>
