@@ -70,7 +70,7 @@
   function configureInput(input) {
     var awesomepleteForm = new Awesomplete(input, {
       minChars: 0,
-      maxItems: 10,
+      maxItems: 20,
       autoFirst: true,
       filter: function (text, input) {
           return (text.toLowerCase().indexOf(input.toLowerCase()) === 0) && (text.slice(0, -1).split('/').length === input.split('/').length);
