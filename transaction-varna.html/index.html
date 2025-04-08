@@ -340,7 +340,7 @@
       case 'Materials': res = Object.keys(entities).filter(e => entities[e].Type.indexOf('Vendor') >= 0); break;
       case 'Lump Sum': res = []; break;
     }
-    return res.filter(e => e !== form_values.Payer);
+    return res;
   }
 
   function getCategoryOptions(multiple_categories) {
